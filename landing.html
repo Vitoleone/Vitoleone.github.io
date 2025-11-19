@@ -1,134 +1,203 @@
-<!DOCTYPE HTML>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>About Me</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Noyan Berkay Aşkın - Unity Game Developer</title>
+    <meta name="description" content="Journey of a passionate Unity game developer specializing in mobile and multiplayer games">
+    <link rel="stylesheet" href="assets/css/gaming-style.css">
+    <link rel="stylesheet" href="assets/css/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    <!-- Navigation -->
+      <nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-gamepad"></i>
+            <span class="logo-text">Noyan Berkay Aşkın Portfolio</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">HOME</a>
+            <div class="nav-link dropdown">
+                <span>PROJECTS</span>
+                <div class="dropdown-content">
+                    <a href="cemerzone.html">Cemerzone</a>
+                    <a href="geometry-dash.html">Geometry Dash</a>
+                    <a href="harvest-it.html">Harvest It</a>
+                    <a href="clash-royale.html">Clash Royale</a>
+                    <a href="ship-action.html">Ship Action</a>
+                    <a href="city-builder.html">City Builder</a>
+                    <a href="fish-masters.html">Fish Masters</a>
+                    <a href="match-squares.html">Match Squares</a>
+                    <a href="popmelon.html">Popmelon</a>
+                    <a href="topdown-shooter.html">Topdown Shooter</a>
+                </div>
+            </div>
+            <a href="landing.html" class="nav-link">ABOUT</a>
+            <a href="index.html#contact" class="nav-link">CONTACT</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
 
-				<!-- Header -->
-				<!-- Note: The "styleN" class below should match that of the banner element. -->
-					<header id="header" class="alt style2">
-						<a href="index.html" class="logo"><strong>Noyan Berkay Aşkın</strong> <span>Portfolio</span></a>
-						<nav>
-							<a href="#menu">Menu</a>
-						</nav>
-					</header>
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1 class="about-title">ABOUT ME</h1>
+            <p class="about-subtitle">6 Years Unity Experience | 2 Years Professional | Game Developer</p>
+            <p class="about-description">
+                I have been involved with Unity for about 6 years, with 2 of those years using Unity professionally in the industrial field. Since games have always been a part of my life, I want to focus on game development rather than industrial applications moving forward.
+            </p>
+        </div>
+    </section>
 
-				<!-- Menu -->
-				<nav id="menu">
-					<ul class="links">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="landing.html">About Me</a></li>
-						<li><a href="match-squares.html">Match Squares</a></li>
-						<li><a href="topdown-shooter.html">Multiplayer Top-Down Shooter</a></li>
-						<li><a href="city-builder.html">City Builder</a></li>
-					</ul>
-				</nav>
+    <!-- Journey Section -->
+    <section class="journey">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-line"></span>
+                    MY JOURNEY
+                    <span class="title-line"></span>
+                </h2>
+            </div>
 
-				<!-- Banner -->
-				<!-- Note: The "styleN" class below should match that of the header element. -->
-					<section id="banner" class="style2">
-						<div class="inner">
-							<span class="image">
-								<img src="images/pic07.jpg" alt="" />
-							</span>
-							<header class="major">
-								<h1>About Me</h1>
-							</header>
-						</div>
-					</section>
+            <div class="timeline-horizontal">
+                <div class="timeline-track">
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2022</div>
+                            <h4>Unity Developer Intern</h4>
+                            <p>No Surrender</p>
+                            <span class="timeline-period">Sep - Dec</span>
+                        </div>
+                    </div>
 
-				<!-- Main -->
-					<div id="main">
-						<!-- Two -->
-							<section id="two" class="spotlights">
-                                <section>
-									<a href="#" class="image">
-										<img src="images/aboutme.jpg" alt="" data-position="top center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Türkçe</h3>
-											</header>
-											<p>Yaklaşık 3 senedir Unity ile oyun geliştirme ile uğraşıyorum. İlk zamanlarda, küçüklüğümde de çok sevdiğim "Gold Miner" oyununun basit bir klonunu geliştirdim. Klon bitene kadar yaşadığım zorlukları aşmak bana çok iyi hissettirmişti. Daha sonra ise "GameDev.tv" udemy kurslarını izleyip daha önce yapılmış projeleri baştan yaptım. Bu projeler "Laser defender" ve "Brick breaker" oyunlarının klonu olup geliştirme sürecinde bana; fizik hesaplamaları, singleton deseni gibi birçok teknik bilgi kattı. Daha çok casual oyunlar üzerine yoğunlaşmak istesem de sektör henüz o tarafa yönelmemişti bu yüzden hyper casual oyunlar yapmaya başladım. "ATM Rush" klonu olarak "Chest Rush" isimli oyunu geliştirdim, bu oyunda DOTween kullanarak UI animasyonları yapmayı ve daha özenli bir UI nasıl oluşturulur daha iyi kavradım. Hyper-casual türünde diğer oyunum ise "Fish-master" oldu. "Fish-Master" oyununda, oyuncu elindeki olta ile yakalayabildiği kadar balık yakalayıp bunları satar ve bundan elde ettiği paralarla oltasını geliştirip daha değerli balıklar avlayabilir. Bu oyun, bir mobil oyunun nasıl yapıldığını anlamamda oldukça faydalı oldu. Daha sonra stajyerlik başvurumda aldığım case üzerine "Cube sumos" adlı oyunu geliştirdim. Oyun bir mobil oyun olup fizik hesaplamaları üzerine çalışıyordu. Oyundaki amaç diğer küpleri ringin dışına itmekti. Oyuncunun dışındaki küpler için basit bir yapay zeka yazarak, yapay zeka kavramı ile tanışmış oldum. Yine stajyerlik dönemimde benden istenen "Clash-Royale" adlı oyunun kopyalanmasında kullandığım "NavMesh" ve "Addressables" ile geliştirici olarak bir adım daha ilerledim. Özellikle "Addressables" mobil oyunlar için oldukça önemliydi çünkü oyuncunun oyunun tüm dosyalarını indirmeden de oynayabilmesini sağlıyordu ve oyunun ön yükleme boyutunu oldukça düşürüyordu. Stajyerlikte yaptığım son projeden sonra artık şirketin geliştirdiği gerçek projeye dahil oldum. Bu proje multiplayer olduğundan ve projenin ortalarında dahil olduğumdan alışmam oldukça uzun sürdü. Projede zaman geçirdikçe hem back-end hem de sanat tarafı ile beraber çalışmayı, jira ile kanban kullanmayı, büyük bir projede github kullanımını ve oyun üzerinde prototipler geliştirmeyi öğrendim. Okulumun ve derslerimin yoğunluğundan dolayı çalışmakta olduğum şirketten çıkma kararı aldım. Şirketten çıktıktan bir süre sonra Panteon adlı şirketin ilk kez düzenleyeceği "Panteon akademi" yi duydum ve başvurdum. Başvurum olumlu olarak sonuçlandı ve dört ay kadar sektörden insanlar tarafından eğitim aldım. Eğitim sonuna kadar daha önceden bildiklerimi pekiştirip yeni bilgiler de edindim ve katılım sertifikası kazandım. Birkaç ay sonra Google tarafından oluşturulmuş "Oyun ve Uygulama Akademisi" ne başvurdum. Bu akademiye 40000 kişi arasından seçilen 2000 kişi arasına girerek seçildim ve unity, proje geliştiriciliği, girişimcilik üzerine 7 ay süren eğitim aldım. Akademiden başarı ile mezun olup Google tarafından sertifikamı almaya hak kazandım. Akademi sürecinde okulum da devam etmekteydi ve bir bitirme projesi yapmalıydım. Arkadaşımla birlikte, bu proje için ağ üzerinden oynanabilir iki boyutlu bir aksiyon oyunu yapmaya karar verdik. Projemizde "PhotonPUN" kullandık ve tek bölümlük oynanabilir bir demo ortaya çıkardık.</p>
-										</div>
-									</div>
-								</section>
-								<section>
-                                    <a href="#" class="image">
-										<img src="" alt="" data-position="top center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>English</h3>
-											</header>
-											<p>I have been involved in game development with Unity for approximately 3 years. In the early stages, I developed a simple clone of the game 'Gold Miner,' which I greatly enjoyed playing when I was younger. Overcoming the challenges I encountered until the completion of the clone gave me a great sense of accomplishment. Later on, I watched the 'GameDev.tv' Udemy courses and recreated existing projects from scratch. These projects were clones of the games 'Laser Defender' and 'Brick Breaker,' and they provided me with various technical knowledge such as physics calculations and the singleton design pattern.
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2024</div>
+                            <h4>Unity Developer Intern</h4>
+                            <p>CODEO</p>
+                            <span class="timeline-period">Jun - Jan 2025</span>
+                        </div>
+                    </div>
 
-												Although I wanted to focus more on casual games, the industry had not yet shifted in that direction. Therefore, I started developing hyper-casual games. I developed a game called 'Chest Rush' as a clone of 'ATM Rush.' In this game, I used DOTween to create UI animations and gained a better understanding of creating a more polished UI. Another game I worked on in the hyper-casual genre was 'Fish Master.' In 'Fish Master,' the player catches as many fish as possible with their fishing rod, sells them, and uses the earnings to upgrade their fishing rod to catch more valuable fish. This game was quite beneficial in helping me understand the process of creating a mobile game.
-												
-												Later, during my internship, I developed a game called 'Cube Sumos' based on a given case. It was a mobile game that focused on physics calculations, and the goal was to push other cubes outside of the ring. By implementing a simple artificial intelligence for the cubes outside the player's control, I got introduced to the concept of AI. During the same internship, I further advanced as a developer by using 'NavMesh' and 'Addressables' while working on a copy of the game 'Clash Royale.' 'Addressables' was particularly crucial for mobile games as it allowed players to play the game without downloading all the files, significantly reducing the initial loading size.
-												
-												Following my last project during the internship, I became involved in the development of a real project within the company. Since the project was multiplayer and I joined in the middle of its development, it took me a while to adapt. As I spent more time on the project, I learned to collaborate with both the back-end and art teams, use Kanban with Jira, utilize GitHub in a large project, and develop prototypes for games.
-												
-												Due to the intensity of my studies and courses at school, I made the decision to leave the company I was working for. After leaving the company, I learned about the first-ever 'Panteon Akademi' organized by Panteon and applied for it. My application was successful, and I received training from industry professionals for about four months. Throughout the program, I solidified my existing knowledge, acquired new information, and obtained a participation certificate. A few months later, I applied for the 'Oyun ve Uygulama Akademisi' created by Google. Among 40,000 applicants, I was selected as one of the 2,000 participants and received a 7-month training in Unity, project development, and entrepreneurship. I successfully graduated from the academy and earned a certification from Google.
-												
-												During the academy program, I continued my studies at school and had to work on a graduation project. Together with a friend, we decided to create a two-dimensional action game that can be played online. We utilized 'Photon PUN' for our project and developed a playable demo for a single level.</p>
-										</div>
-									</div>
-								</section>
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2024</div>
+                            <h4>Part-Time Unity Developer</h4>
+                            <p>CODEO</p>
+                            <span class="timeline-period">Jun - Jan 2025</span>
+                        </div>
+                    </div>
 
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2024</div>
+                            <h4>B.S. Computer Engineering</h4>
+                            <p>Yalova University</p>
+                            <span class="timeline-period">Graduated Aug</span>
+                        </div>
+                    </div>
 
-				<!-- Contact -->
-					<section id="contact">
-						<div class="inner">
-							<section class="split">
-								<section>
-									<div class="contact-method">
-										<span class="icon solid alt fa-envelope"></span>
-										<h3>Email</h3>
-										<a href="mailto: berkay4.askin@gmail.com">berkay4.askin@gmail.com</a>
-									</div>
-								</section>
-							</section>
-						</div>
-					</section>
+                    <div class="timeline-node">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-year">2025</div>
+                            <h4>Full-Time Unity Developer</h4>
+                            <p>CODEO</p>
+                            <span class="timeline-period">Jan - Dec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-				<!-- Footer -->
-				<footer id="footer">
-					<div class="inner">
-						<h3>Socials</h3>
-						<ul class="icons">
-							<li><a href="https://github.com/Vitoleone" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="https://www.linkedin.com/in/noyan-berkay-askin-616a75224/" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-						</ul>
-						
-					</div>
-				</footer>
+    <!-- Tools Section -->
+    <section class="tools">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-line"></span>
+                    TOOLS & TECHNOLOGIES
+                    <span class="title-line"></span>
+                </h2>
+            </div>
 
-			</div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <i class="fab fa-unity"></i>
+                    <span>Unity</span>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-code"></i>
+                    <span>C#</span>
+                </div>
+                <div class="tool-item">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Plastic SCM</span>
+                </div>
+                <div class="tool-item">
+                    <i class="fas fa-server"></i>
+                    <span>Express.js</span>
+                </div>
+              
+                <div class="tool-item">
+                    <i class="fas fa-server"></i>
+                    <span>Postman</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Create Something Amazing?</h2>
+                <p>Let's collaborate and bring your game ideas to life!</p>
+                <div class="cta-buttons">
+                    <a href="index.html#projects" class="btn btn-primary">
+                        <span>VIEW MY WORK</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="index.html#contact" class="btn btn-secondary">
+                        <span>GET IN TOUCH</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	</body>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Noyan Berkay Aşkın. All rights reserved.</p>
+            <p class="footer-tagline">Crafted with <i class="fas fa-heart"></i> and Unity</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="assets/js/gaming-main.js"></script>
+</body>
 </html>

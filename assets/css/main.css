@@ -99,7 +99,8 @@ input, select, textarea {
 	}
 
 	body {
-		background: #242943;
+		background: linear-gradient(135deg, #0a0e27 0%, #1a0e2e 50%, #0a0e27 100%);
+		background-attachment: fixed;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -116,12 +117,13 @@ input, select, textarea {
 /* Type */
 
 	body, input, select, textarea {
-		color: #ffffff;
+		color: #e0e6ff;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 17pt;
 		font-weight: 300;
 		letter-spacing: 0.025em;
 		line-height: 1.65;
+		text-shadow: 0 0 10px rgba(160, 120, 255, 0.3);
 	}
 
 		@media screen and (max-width: 1680px) {
@@ -149,10 +151,10 @@ input, select, textarea {
 		}
 
 	a {
-		-moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		-webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+		-moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+		-webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
 		border-bottom: dotted 1px;
 		color: inherit;
 		text-decoration: none;
@@ -160,11 +162,12 @@ input, select, textarea {
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #9bf1ff !important;
+			color: #a78bfa !important;
+			text-shadow: 0 0 20px rgba(167, 139, 250, 0.8);
 		}
 
 		a:active {
-			color: #53e3fb !important;
+			color: #8b5cf6 !important;
 		}
 
 	strong, b {
@@ -185,6 +188,7 @@ input, select, textarea {
 		font-weight: 600;
 		line-height: 1.65;
 		margin: 0 0 1em 0;
+		text-shadow: 0 0 30px rgba(167, 139, 250, 0.6);
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
