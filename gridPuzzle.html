@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Jigsaw Puzzle | Noyan Berkay Aşkın</title>
+    <link rel="stylesheet" href="assets/css/gaming-style.css">
+    <link rel="stylesheet" href="assets/css/project-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-gamepad"></i>
+            <span class="logo-text">Noyan Berkay Aşkın Portfolio</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">HOME</a>
+            <div class="nav-link dropdown">
+                <span>PROJECTS</span>
+                <div class="dropdown-content">
+                    <a href="gridPuzzle.html">Grid Puzzle</a>
+                    <a href="cemerzone.html">Cemerzone</a>
+                    <a href="geometry-dash.html">Geometry Dash</a>
+                    <a href="harvest-it.html">Harvest It</a>
+                    <a href="clash-royale.html">Clash Royale</a>
+                    <a href="ship-action.html">Ship Action</a>
+                    <a href="city-builder.html">City Builder</a>
+                    <a href="fish-masters.html">Fish Masters</a>
+                    <a href="match-squares.html">Match Squares</a>
+                    <a href="popmelon.html">Popmelon</a>
+                    <a href="topdown-shooter.html">Topdown Shooter</a>
+                </div>
+            </div>
+            <a href="landing.html" class="nav-link">ABOUT</a>
+            <a href="index.html#contact" class="nav-link">CONTACT</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+    <section class="project-hero">
+        <div class="project-hero-content">
+            <div class="project-category">Puzzle Game</div>
+            <h1 class="project-hero-title">PROCEDURAL JIGSAW PUZZLE</h1>
+            <p class="project-hero-description">
+               A modular puzzle game featuring runtime texture slicing and dynamic gameplay mechanics.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">Unity</span>
+                <span class="project-tag">Puzzle</span>
+                <span class="project-tag">Mobile</span>
+                <span class="project-tag">AI</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="project-content">
+
+        <div class="content-section">
+            <h2>ABOUT THE PROJECT</h2>
+            
+            <h3>English</h3>
+            <p>
+                This project is a modular puzzle game developed in Unity that procedurally slices 2D images into interactive grid-based puzzles at runtime. The development focused on clean architecture, scalable level management, and enhanced "game feel" through dynamic audio-visual feedback.
+            </p>
+
+            <p><strong>Key Features:</strong></p>
+            <ul>
+                <li><strong>Runtime Texture Slicing:</strong> Implemented a custom algorithm to slice any given Texture2D into an NxM grid of sprites dynamically, eliminating the need for pre-cut assets.</li>
+                <li><strong>Robust Architecture:</strong> Built using SOLID principles and Singleton pattern to ensure modularity. Systems like Audio, UI, and Level Management are decoupled for easy maintenance.</li>
+                <li><strong>ScriptableObject Data Management:</strong> Level data (images, grid size, time limits, video rewards) are managed via ScriptableObjects, allowing for code-free content creation.</li>
+                <li><strong>Smart Input & Hint System:</strong> Features a custom swipe-based interaction logic and an intelligent hint system that detects player inactivity to provide visual cues ("Nudge" and "Wave" animations).</li>
+                <li><strong>Dynamic Audio & Juice:</strong> Integrated a dynamic background music playlist and a "Tension Mode" that alters audio/visuals as the timer runs out. Includes screen shake and particle effects for satisfying gameplay.</li>
+                <li><strong>Progression System:</strong> Persistent save/load system using PlayerPrefs to track unlocked levels and player progress.</li>
+            </ul>
+
+            <p>
+                <strong>Tech Stack:</strong> Unity (C#), UGUI, Coroutines, Design Patterns.
+            </p>
+
+
+            <h3>Türkçe</h3>
+            <p>
+                Unity oyun motoru kullanılarak geliştirilen bu proje, herhangi bir görseli çalışma zamanında (runtime) matematiksel olarak parçalara ayırarak oynanabilir bir bulmacaya dönüştüren modüler bir yapıya sahiptir. Proje sürecinde temiz kod mimarisi, ölçeklenebilir içerik yönetimi ve kullanıcı deneyimini (UX) güçlendiren görsel-işitsel geri bildirim mekanizmalarına odaklanılmıştır.
+            </p>
+
+            <p><strong>Öne Çıkan Özellikler:</strong></p>
+            <ul>
+                <li><strong>Runtime Texture Slicing:</strong> Görselleri önceden kesilmiş varlıklar kullanmak yerine, kod tabanlı bir algoritma ile dinamik olarak NxM ızgaralara bölen sistem.</li>
+                <li><strong>Sağlam Mimari:</strong> SOLID prensipleri ve Singleton tasarım kalıbı kullanılarak geliştirildi. Ses, UI ve Seviye yöneticileri birbirinden bağımsız (decoupled) çalışacak şekilde tasarlandı.</li>
+                <li><strong>ScriptableObject ile Veri Yönetimi:</strong> Bölüm verileri (görseller, grid boyutu, süre, ödül videoları) ScriptableObject'ler üzerinden yönetilerek kod yazmadan içerik üretimi sağlandı.</li>
+                <li><strong>Akıllı Input ve İpucu Sistemi:</strong> Sürükle-bırak yerine modern "Swipe" (Kaydırma) mekaniği ve oyuncu takıldığında devreye giren akıllı görsel ipucu (Dürtme ve Sallanma animasyonları) sistemi.</li>
+                <li><strong>Dinamik Atmosfer (Game Juice):</strong> Müzik listesi (Playlist) sistemi ve süre azaldığında devreye giren "Gerilim Modu" (Tension Mode). Ayrıca parça yerleşimi sırasında ekran titremesi (Screen Shake) gibi tatmin edici efektler.</li>
+                <li><strong>İlerleme Sistemi:</strong> PlayerPrefs kullanılarak kilitli/açık bölümlerin ve oyuncu ilerlemesinin cihazda tutulması.</li>
+            </ul>
+
+           <div class="content-section">
+            <h2>GAMEPLAY</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="images/gridPuzzleVideo.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <div class="cta-buttons">
+                <a href="index.html#projects" class="btn btn-secondary">
+                    <span>BACK TO PROJECTS</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2 class="section-title">LET'S CONNECT</h2>
+            <p class="contact-description">Ready to create something amazing together?</p>
+            <div class="contact-methods">
+                <a href="mailto:berkay4.askin@gmail.com" class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>berkay4.askin@gmail.com</p>
+                </a>
+                <a href="https://github.com/Vitoleone" class="contact-card" target="_blank">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>@Vitoleone</p>
+                </a>
+                <a href="https://www.linkedin.com/in/noyan-berkay-askin-616a75224/" class="contact-card" target="_blank">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <p>Noyan Berkay Aşkın</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Noyan Berkay Aşkın. All rights reserved.</p>
+            <p class="footer-tagline">Crafted with <i class="fas fa-heart"></i> and Unity</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="assets/js/gaming-main.js"></script>
+</body>
+</html>
