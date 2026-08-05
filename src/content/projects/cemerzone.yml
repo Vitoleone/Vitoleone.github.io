@@ -47,4 +47,5 @@ contributions:
       en: Users can draw areas over imagery retrieved from Google Maps.
       tr: Kullanıcılar Google Maps üzerinden alınan görüntüler üzerinde alan çizebilir.
 gallery: []
-links: {}
+links:
+  info: https://www.youtube.com/watch?v=W05a9Q43IJY

@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parse } from 'yaml';
@@ -15,6 +15,19 @@ import {
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const contentRoot = resolve(projectRoot, 'src/content');
+const projectMediaRoot = resolve(projectRoot, 'src/assets/project-media');
+
+function assertContainedProjectMedia(entryPath: string, source: string) {
+  const resolvedSource = resolve(dirname(entryPath), source);
+  const relativeSource = relative(projectMediaRoot, resolvedSource);
+  const isContained =
+    relativeSource !== '..' &&
+    !relativeSource.startsWith(`..${sep}`) &&
+    !isAbsolute(relativeSource);
+
+  expect(isContained, `${source} should resolve within ${projectMediaRoot}`).toBe(true);
+  expect(existsSync(resolvedSource), source).toBe(true);
+}
 
 function loadCollection(directory: string) {
   const collectionDirectory = resolve(contentRoot, directory);
@@ -50,8 +63,23 @@ describe('migrated portfolio content', () => {
 
   it('contains the eleven legacy projects plus The Boss in unique display order', () => {
     const projects = loadCollection('projects').map((entry) => projectSchema.parse(entry.data));
+    const expectedSlugs = [
+      'cemerzone',
+      'city-builder',
+      'clash-royale-clone',
+      'fish-masters',
+      'geometry-dash-clone',
+      'harvest-it',
+      'match-squares',
+      'multiplayer-top-down-shooter',
+      'pop-melon',
+      'procedural-jigsaw-puzzle',
+      'ship-action-demo',
+      'the-boss-gangster-criminal-empire',
+    ];
 
     expect(projects).toHaveLength(12);
+    expect(projects.map(({ slug }) => slug).toSorted()).toEqual(expectedSlugs);
     expect(new Set(projects.map(({ slug }) => slug)).size).toBe(12);
     expect(new Set(projects.map(({ order }) => order)).size).toBe(12);
     expect(projects.every(({ published }) => published)).toBe(true);
@@ -81,8 +109,25 @@ describe('migrated portfolio content', () => {
       },
     });
     expect(boss.contributions.length).toBeGreaterThanOrEqual(2);
-    expect(boss.contributions[0]?.title.en).toMatch(/^Example\b/);
-    expect(boss.contributions[0]?.title.tr).toMatch(/^Örnek\b/u);
+    for (const contribution of boss.contributions) {
+      expect(contribution.title.en).toMatch(/^Example\b/);
+      expect(contribution.title.tr).toMatch(/^Örnek\b/u);
+      expect(contribution.description.en).toMatch(
+        /(?:not a production claim|no unverified production detail is asserted)/i,
+      );
+      expect(contribution.description.tr).toMatch(
+        /(?:bir üretim iddiası değildir|doğrulanmamış bir üretim detayı öne sürülmez)/iu,
+      );
+      expect(contribution.media).toBeUndefined();
+    }
+  });
+
+  it('preserves the verified CEMERZONE project information link', () => {
+    const cemerzone = projectSchema.parse(
+      loadCollection('projects').find(({ data }) => data.slug === 'cemerzone')?.data,
+    );
+
+    expect(cemerzone.links.info).toBe('https://www.youtube.com/watch?v=W05a9Q43IJY');
   });
 
   it('omits the erroneous Fish Masters source URL', () => {
@@ -125,8 +170,19 @@ describe('migrated portfolio content', () => {
         expect(source, `${entry.file} should use repository media`).toMatch(
           /^\.\.\/\.\.\/assets\/project-media\//,
         );
-        expect(existsSync(resolve(dirname(entry.path), source)), source).toBe(true);
+        assertContainedProjectMedia(entry.path, source);
       }
     }
+  });
+
+  it('rejects traversal after the project-media text prefix', () => {
+    const exampleEntry = resolve(contentRoot, 'projects/example.yml');
+
+    expect(() =>
+      assertContainedProjectMedia(
+        exampleEntry,
+        '../../assets/project-media/../../../content/profile/profile.yml',
+      ),
+    ).toThrow(/should resolve within/u);
   });
 });

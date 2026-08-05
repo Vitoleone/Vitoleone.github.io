@@ -44,11 +44,16 @@ describe('project collection helpers', () => {
         play: ' ',
         source: undefined,
         store: 'https://store.steampowered.com/app/123/example',
+        info: 'https://www.youtube.com/watch?v=example',
       }),
     ).toEqual([
       {
         kind: 'store',
         href: 'https://store.steampowered.com/app/123/example',
+      },
+      {
+        kind: 'info',
+        href: 'https://www.youtube.com/watch?v=example',
       },
     ]);
   });

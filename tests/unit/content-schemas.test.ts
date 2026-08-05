@@ -78,12 +78,14 @@ describe('portfolio collection schemas', () => {
       ...validProject,
       links: {
         play: 'http://example.com/play',
+        info: 'https://example.com/information',
         store: 'https://example.com/store',
       },
     });
 
     expect(result.links).toEqual({
       play: 'http://example.com/play',
+      info: 'https://example.com/information',
       store: 'https://example.com/store',
     });
   });

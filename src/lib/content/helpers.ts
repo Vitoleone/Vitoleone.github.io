@@ -66,7 +66,7 @@ export function getPublishedProjects<T extends OrderedProjectEntry>(projects: re
     .toSorted((left, right) => left.data.order - right.data.order);
 }
 
-export type ProjectCtaKind = 'play' | 'store' | 'source';
+export type ProjectCtaKind = 'play' | 'store' | 'source' | 'info';
 export type ProjectLinks = Partial<Record<ProjectCtaKind, string | undefined>>;
 
 export function getVisibleCtas(links: ProjectLinks | undefined): Array<{
@@ -75,7 +75,7 @@ export function getVisibleCtas(links: ProjectLinks | undefined): Array<{
 }> {
   if (!links) return [];
 
-  return (['play', 'store', 'source'] as const).flatMap((kind) => {
+  return (['play', 'store', 'source', 'info'] as const).flatMap((kind) => {
     const href = links[kind]?.trim();
     return href ? [{ kind, href }] : [];
   });

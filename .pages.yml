@@ -156,6 +156,7 @@ content:
           - { name: play, label: Play URL, type: string }
           - { name: store, label: Store URL, type: string }
           - { name: source, label: Source URL, type: string }
+          - { name: info, label: Project information URL, type: string }
 
   - name: profile
     label: Profile

@@ -98,6 +98,7 @@ export const projectSchema = z
         play: optionalUrlSchema,
         store: optionalUrlSchema,
         source: optionalUrlSchema,
+        info: optionalUrlSchema,
       })
       .strict()
       .default({}),
