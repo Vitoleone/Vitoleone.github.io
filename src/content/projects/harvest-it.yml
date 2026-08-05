@@ -1,0 +1,39 @@
+slug: harvest-it
+published: true
+featured: false
+order: 8
+title:
+  en: Harvest It!
+  tr: Harvest It!
+summary:
+  en: A relaxed farming game demo for mobile.
+  tr: Mobil cihazlar için rahatlatıcı bir çiftçilik oyunu demosu.
+description:
+  en: A farming demo used to explore animation masks, animation events and particle-collision callbacks in Unity.
+  tr: Unity'de animasyon maskelerini, animasyon olaylarını ve parçacık çarpışma geri çağrılarını keşfetmek için geliştirilmiş bir çiftçilik demosu.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/harvest-it.gif
+  alt:
+    en: Harvest It gameplay
+    tr: Harvest It oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Animation and Particles
+      tr: Animasyon ve Parçacıklar
+    description:
+      en: The demo explores animation masks for playing different animations on body regions, animation events for timed function calls and OnParticleCollision callbacks.
+      tr: Demo; vücut bölgelerinde farklı animasyonlar oynatmak için animasyon maskelerini, zamanlanmış fonksiyon çağrıları için animasyon olaylarını ve OnParticleCollision geri çağrılarını ele alır.
+    media:
+      type: video
+      src: ../../assets/project-media/harvest-it-gameplay.mp4
+      caption:
+        en: Harvest It gameplay video
+        tr: Harvest It oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/Harvest-It

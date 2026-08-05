@@ -1,0 +1,48 @@
+slug: procedural-jigsaw-puzzle
+published: true
+featured: false
+order: 2
+title:
+  en: Procedural Jigsaw Puzzle
+  tr: Prosedürel Yapboz
+summary:
+  en: A modular puzzle game featuring runtime texture slicing and dynamic gameplay mechanics.
+  tr: Çalışma zamanında görsel dilimleme ve dinamik oynanış mekanikleri sunan modüler bir bulmaca oyunu.
+description:
+  en: A modular Unity puzzle game that slices 2D images into interactive grid-based puzzles at runtime, with scalable level management and audiovisual feedback.
+  tr: 2D görselleri çalışma zamanında etkileşimli, ızgara tabanlı bulmacalara ayıran; ölçeklenebilir bölüm yönetimi ve görsel-işitsel geri bildirim sunan modüler bir Unity bulmaca oyunu.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/grid-puzzle.gif
+  alt:
+    en: Procedural Jigsaw Puzzle gameplay
+    tr: Prosedürel Yapboz oynanışı
+technologies:
+  - Unity
+  - C#
+  - UGUI
+  - Coroutines
+  - Design Patterns
+contributions:
+  - title:
+      en: Runtime Texture Slicing
+      tr: Çalışma Zamanında Görsel Dilimleme
+    description:
+      en: A custom algorithm dynamically divides a Texture2D into an N by M sprite grid without requiring pre-cut assets.
+      tr: Özel bir algoritma, önceden kesilmiş varlıklar gerektirmeden bir Texture2D görselini dinamik olarak N x M sprite ızgarasına böler.
+  - title:
+      en: Level and Progression Data
+      tr: Bölüm ve İlerleme Verileri
+    description:
+      en: ScriptableObjects manage level images, grid sizes, time limits and video rewards, while PlayerPrefs tracks unlocked levels and progress.
+      tr: ScriptableObject'ler bölüm görsellerini, ızgara boyutlarını, süreleri ve video ödüllerini yönetirken PlayerPrefs açılan bölümleri ve ilerlemeyi takip eder.
+  - title:
+      en: Input, Hints and Feedback
+      tr: Girdi, İpucu ve Geri Bildirim
+    description:
+      en: Swipe interaction, inactivity hints, a music playlist, tension mode, screen shake and particles support the game feel.
+      tr: Kaydırma etkileşimi, hareketsizlik ipuçları, müzik listesi, gerilim modu, ekran sarsıntısı ve parçacıklar oyun hissini destekler.
+gallery: []
+links: {}

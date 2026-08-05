@@ -1,0 +1,45 @@
+slug: clash-royale-clone
+published: true
+featured: false
+order: 9
+title:
+  en: Clash Royale Clone
+  tr: Clash Royale Klonu
+summary:
+  en: A real-time strategy game inspired by Clash Royale.
+  tr: Clash Royale'den esinlenen gerçek zamanlı bir strateji oyunu.
+description:
+  en: Players spend energy to create units that advance toward an enemy castle, fight opposing units and attack the castle. Ranged units can attack airborne units, while close-range units cannot.
+  tr: Oyuncular enerji harcayarak düşman kalesine ilerleyen, rakip birimlerle savaşan ve kaleye saldıran birimler oluşturur. Menzilli birimler hava birimlerine saldırabilirken yakın menzilli birimler saldıramaz.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/clash-royale-clone.gif
+  alt:
+    en: Clash Royale Clone gameplay
+    tr: Clash Royale Klonu oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Units and Combat
+      tr: Birimler ve Çatışma
+    description:
+      en: Units are created by spending energy and automatically move toward the enemy castle, engaging targets they meet along the way.
+      tr: Birimler enerji harcanarak oluşturulur ve düşman kalesine doğru otomatik ilerlerken karşılaştıkları hedeflerle çatışır.
+  - title:
+      en: Match Goal
+      tr: Maç Hedefi
+    description:
+      en: The winner either destroys the opposing castle or has the castle with more health when time expires.
+      tr: Süre dolduğunda rakip kaleyi yok eden veya kalesi daha fazla cana sahip olan taraf kazanır.
+    media:
+      type: video
+      src: ../../assets/project-media/clash-royale-clone-gameplay.mp4
+      caption:
+        en: Clash Royale Clone gameplay video
+        tr: Clash Royale Klonu oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/Clash-RoyaleClone

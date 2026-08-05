@@ -1,0 +1,39 @@
+slug: pop-melon
+published: true
+featured: false
+order: 7
+title:
+  en: Pop Melon
+  tr: Pop Melon
+summary:
+  en: A hyper-casual puzzle game about merging fruit into larger fruit.
+  tr: Meyveleri birleştirerek daha büyük meyveler oluşturma üzerine bir hyper-casual bulmaca oyunu.
+description:
+  en: Inspired by the watermelon game, Pop Melon uses physics-based play and fruit-merging mechanics as players combine fruit strategically to pursue a high score.
+  tr: Karpuz oyunundan esinlenen Pop Melon, oyuncular yüksek skor için meyveleri stratejik biçimde birleştirirken fizik tabanlı oynanış ve meyve birleştirme mekanikleri kullanır.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/pop-melon.gif
+  alt:
+    en: Pop Melon gameplay
+    tr: Pop Melon oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Gameplay
+      tr: Oynanış
+    description:
+      en: Players drop and combine fruit to create larger fruit and pursue the highest score.
+      tr: Oyuncular daha büyük meyveler oluşturmak ve en yüksek skora ulaşmak için meyveleri bırakıp birleştirir.
+    media:
+      type: video
+      src: ../../assets/project-media/pop-melon-gameplay.mp4
+      caption:
+        en: Pop Melon gameplay video
+        tr: Pop Melon oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/K-Pop-Watermelon

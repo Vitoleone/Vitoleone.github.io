@@ -1,0 +1,41 @@
+slug: the-boss-gangster-criminal-empire
+published: true
+featured: true
+order: 1
+title:
+  en: "The Boss Gangster: Criminal Empire"
+  tr: "The Boss Gangster: Criminal Empire"
+summary:
+  en: A 2025 title developed by BEF GAMES and published by Tripwire Presents.
+  tr: BEF GAMES tarafından geliştirilen ve Tripwire Presents tarafından yayımlanan 2025 yapımı bir oyun.
+description:
+  en: "Gameplay Programmer on The Boss Gangster: Criminal Empire, developed by BEF GAMES and published by Tripwire Presents."
+  tr: "BEF GAMES tarafından geliştirilen ve Tripwire Presents tarafından yayımlanan The Boss Gangster: Criminal Empire projesinde Oynanış Programcısı."
+role:
+  en: Gameplay Programmer
+  tr: Oynanış Programcısı
+developer: BEF GAMES
+publisher: Tripwire Presents
+releaseYear: 2025
+cover:
+  src: ../../assets/project-media/the-boss-placeholder.svg
+  alt:
+    en: Neutral placeholder cover for The Boss Gangster Criminal Empire
+    tr: The Boss Gangster Criminal Empire için nötr geçici kapak
+technologies: []
+contributions:
+  - title:
+      en: Example — Player Experience
+      tr: Örnek — Oyuncu Deneyimi
+    description:
+      en: Example content reserved for a future, approved account of the player experience; this is not a production claim.
+      tr: Oyuncu deneyiminin gelecekte onaylanacak anlatımı için ayrılmış örnek içerik; bu bir üretim iddiası değildir.
+  - title:
+      en: Example — World and Tone
+      tr: Örnek — Dünya ve Ton
+    description:
+      en: Example content reserved for approved project material; no unverified production detail is asserted here.
+      tr: Onaylı proje materyalleri için ayrılmış örnek içerik; burada doğrulanmamış bir üretim detayı öne sürülmez.
+gallery: []
+links:
+  store: https://store.steampowered.com/app/2774040/The_Boss_Gangster_Criminal_Empire/

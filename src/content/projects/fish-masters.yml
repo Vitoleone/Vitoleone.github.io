@@ -1,0 +1,38 @@
+slug: fish-masters
+published: true
+featured: false
+order: 12
+title:
+  en: Fish Masters
+  tr: Fish Masters
+summary:
+  en: A simple hyper-casual fishing game for mobile.
+  tr: Mobil cihazlar için basit bir hyper-casual balıkçılık oyunu.
+description:
+  en: Fish Masters is a compact game demo focused on quick, accessible play and core hyper-casual mechanics for mobile platforms.
+  tr: Fish Masters, mobil platformlarda hızlı ve erişilebilir oynanışa ve temel hyper-casual mekaniklere odaklanan küçük bir oyun demosudur.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/fish-masters.gif
+  alt:
+    en: Fish Masters gameplay
+    tr: Fish Masters oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Gameplay
+      tr: Oynanış
+    description:
+      en: The demo presents quick and accessible hyper-casual fishing gameplay for mobile.
+      tr: Demo, mobil cihazlar için hızlı ve erişilebilir hyper-casual balıkçılık oynanışı sunar.
+    media:
+      type: video
+      src: ../../assets/project-media/fish-masters-gameplay.mp4
+      caption:
+        en: Fish Masters gameplay video
+        tr: Fish Masters oynanış videosu
+gallery: []
+links: {}

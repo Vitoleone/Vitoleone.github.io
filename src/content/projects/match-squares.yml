@@ -1,0 +1,39 @@
+slug: match-squares
+published: true
+featured: false
+order: 4
+title:
+  en: Match Squares
+  tr: Match Squares
+summary:
+  en: A puzzle game demo with engaging mechanics and smooth gameplay.
+  tr: Etkileşimli mekaniklere ve akıcı oynanışa sahip bir bulmaca oyunu demosu.
+description:
+  en: Match Squares is a puzzle game demo that challenges players with engaging mechanics and smooth gameplay.
+  tr: Match Squares, oyunculara etkileşimli mekanikler ve akıcı bir oynanışla meydan okuyan bir bulmaca oyunu demosudur.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/match-squares.gif
+  alt:
+    en: Match Squares gameplay
+    tr: Match Squares oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Gameplay
+      tr: Oynanış
+    description:
+      en: The demo presents the project's puzzle mechanics and smooth gameplay.
+      tr: Demo, projenin bulmaca mekaniklerini ve akıcı oynanışını sunar.
+    media:
+      type: video
+      src: ../../assets/project-media/match-squares-gameplay.mp4
+      caption:
+        en: Match Squares gameplay video
+        tr: Match Squares oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/Match-The-Squares

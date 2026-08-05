@@ -1,0 +1,51 @@
+slug: ship-action-demo
+published: true
+featured: false
+order: 10
+title:
+  en: Ship Action Demo
+  tr: Gemi Aksiyon Demosu
+summary:
+  en: An action game with missions, ammunition and an upgrade system.
+  tr: Görevler, mühimmat ve geliştirme sistemi içeren bir aksiyon oyunu.
+description:
+  en: Players complete the objective shown on screen to advance, monitor their ammunition and return to base to improve attack, health or ammunition using gold dropped by defeated enemies.
+  tr: Oyuncular ilerlemek için ekrandaki görevi tamamlar, mühimmatlarını takip eder ve yenilen düşmanlardan kazanılan altınla saldırı, can veya mühimmat geliştirmek için üsse döner.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/ship-action-demo.gif
+  alt:
+    en: Ship Action Demo gameplay
+    tr: Gemi Aksiyon Demosu oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Missions and Resources
+      tr: Görevler ve Kaynaklar
+    description:
+      en: The mission display defines the current objective, while the ammunition counter signals when the player needs to return to base.
+      tr: Görev ekranı mevcut hedefi belirlerken mühimmat sayacı oyuncunun ne zaman üsse dönmesi gerektiğini gösterir.
+    media:
+      type: video
+      src: ../../assets/project-media/ship-action-level-1.mp4
+      caption:
+        en: Ship Action Demo level one gameplay
+        tr: Gemi Aksiyon Demosu birinci bölüm oynanışı
+  - title:
+      en: Upgrades
+      tr: Geliştirmeler
+    description:
+      en: Gold dropped by defeated enemies funds attack, health and ammunition improvements at the base.
+      tr: Yenilen düşmanlardan düşen altın, üsteki saldırı, can ve mühimmat geliştirmelerinde kullanılır.
+    media:
+      type: video
+      src: ../../assets/project-media/ship-action-level-2.mp4
+      caption:
+        en: Ship Action Demo level two gameplay
+        tr: Gemi Aksiyon Demosu ikinci bölüm oynanışı
+gallery: []
+links:
+  source: https://github.com/Vitoleone/Ship-Action-Demo

@@ -1,0 +1,51 @@
+slug: multiplayer-top-down-shooter
+published: true
+featured: false
+order: 11
+title:
+  en: Multiplayer Top-Down Shooter
+  tr: Çok Oyunculu Üstten Görünümlü Nişancı
+summary:
+  en: A cooperative shooter with character progression and a multi-phase boss battle.
+  tr: Karakter ilerlemesi ve çok aşamalı patron savaşı içeren iş birliğine dayalı bir nişancı oyunu.
+description:
+  en: Players defeat enemies to gain experience, improve character attributes and abilities, and face a three-phase boss after the timer reaches one minute.
+  tr: Oyuncular deneyim kazanmak, karakter özellikleri ile yeteneklerini geliştirmek ve sayaç bir dakikaya ulaştığında üç aşamalı bir patronla karşılaşmak için düşmanları yener.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/multiplayer-top-down-shooter.gif
+  alt:
+    en: Multiplayer Top-Down Shooter gameplay
+    tr: Çok Oyunculu Üstten Görünümlü Nişancı oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Character Progression
+      tr: Karakter İlerlemesi
+    description:
+      en: Experience improves speed, attack, health and each character's unique ability through five levels; additional players increase earned experience.
+      tr: Deneyim; hız, saldırı, can ve her karakterin kendine özgü yeteneğini beş seviye boyunca geliştirir; ek oyuncular kazanılan deneyimi artırır.
+    media:
+      type: video
+      src: ../../assets/project-media/multiplayer-top-down-gameplay.mp4
+      caption:
+        en: Multiplayer Top-Down Shooter gameplay
+        tr: Çok Oyunculu Üstten Görünümlü Nişancı oynanışı
+  - title:
+      en: Boss Battle
+      tr: Patron Savaşı
+    description:
+      en: The boss fires at players, summons minions and then attacks more rapidly across its three phases.
+      tr: Patron, üç aşaması boyunca oyunculara ateş eder, minyonlar çağırır ve ardından daha hızlı saldırır.
+    media:
+      type: video
+      src: ../../assets/project-media/multiplayer-top-down-boss-fight.mp4
+      caption:
+        en: Multiplayer Top-Down Shooter boss fight
+        tr: Çok Oyunculu Üstten Görünümlü Nişancı patron savaşı
+gallery: []
+links:
+  source: https://github.com/BerkayAygul/Top-Down-Shooter

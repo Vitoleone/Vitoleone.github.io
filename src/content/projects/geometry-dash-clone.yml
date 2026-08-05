@@ -1,0 +1,39 @@
+slug: geometry-dash-clone
+published: true
+featured: false
+order: 6
+title:
+  en: Geometry Dash Clone
+  tr: Geometry Dash Klonu
+summary:
+  en: A fast-paced platformer with challenging obstacles.
+  tr: Zorlu engellere sahip hızlı tempolu bir platform oyunu.
+description:
+  en: A platformer that challenges players with precise timing and quick reflexes while they navigate obstacles and jump at the right moment.
+  tr: Oyuncuların engelleri aşarken ve doğru anda zıplarken hassas zamanlama ve hızlı reflekslerini sınayan bir platform oyunu.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/geometry-dash-clone.gif
+  alt:
+    en: Geometry Dash Clone gameplay
+    tr: Geometry Dash Klonu oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Gameplay
+      tr: Oynanış
+    description:
+      en: The demo shows the project's obstacle navigation and precisely timed jumps.
+      tr: Demo, projenin engelleri aşma ve hassas zamanlamalı zıplama oynanışını gösterir.
+    media:
+      type: video
+      src: ../../assets/project-media/geometry-dash-clone-gameplay.mp4
+      caption:
+        en: Geometry Dash Clone gameplay video
+        tr: Geometry Dash Klonu oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/Geometry-Dash-Clone

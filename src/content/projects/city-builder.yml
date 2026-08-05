@@ -1,0 +1,39 @@
+slug: city-builder
+published: true
+featured: false
+order: 5
+title:
+  en: City Builder
+  tr: Şehir Kurma
+summary:
+  en: A city-building simulation demo.
+  tr: Bir şehir kurma simülasyonu demosu.
+description:
+  en: City Builder is a demo about strategic city planning, building and managing a city, developing infrastructure and creating a thriving metropolis.
+  tr: City Builder; stratejik şehir planlama, şehir kurma ve yönetme, altyapı geliştirme ve gelişen bir metropol oluşturma üzerine bir demodur.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/city-builder.gif
+  alt:
+    en: City Builder gameplay
+    tr: City Builder oynanışı
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Gameplay
+      tr: Oynanış
+    description:
+      en: The demo presents strategic city planning and infrastructure development.
+      tr: Demo, stratejik şehir planlamasını ve altyapı geliştirmeyi sunar.
+    media:
+      type: video
+      src: ../../assets/project-media/city-builder-gameplay.mp4
+      caption:
+        en: City Builder gameplay video
+        tr: City Builder oynanış videosu
+gallery: []
+links:
+  source: https://github.com/Vitoleone/CityBuilderDemo

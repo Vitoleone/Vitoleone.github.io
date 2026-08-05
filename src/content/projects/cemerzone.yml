@@ -1,0 +1,50 @@
+slug: cemerzone
+published: true
+featured: false
+order: 3
+title:
+  en: CEMERZONE
+  tr: CEMERZONE
+summary:
+  en: A comprehensive 3D park design tool developed for Cemer.
+  tr: Cemer için geliştirilmiş kapsamlı bir 3D park tasarım aracı.
+description:
+  en: A professional design application that lets users create parks in a three-dimensional environment using models retrieved from Cemer's database.
+  tr: Kullanıcıların Cemer'in veritabanından alınan modellerle üç boyutlu bir ortamda park oluşturmasını sağlayan profesyonel bir tasarım uygulaması.
+role:
+  en: Unity Developer
+  tr: Unity Geliştiricisi
+cover:
+  src: ../../assets/project-media/cemerzone.gif
+  alt:
+    en: CEMERZONE park design application
+    tr: CEMERZONE park tasarım uygulaması
+technologies:
+  - Unity
+contributions:
+  - title:
+      en: Park Planning
+      tr: Park Planlama
+    description:
+      en: The application checks intersections between park areas and supports meter-based technical drawing in the scene.
+      tr: Uygulama, park alanları arasındaki kesişimleri kontrol eder ve sahnede metre tabanlı teknik çizimi destekler.
+  - title:
+      en: Presentation and Lighting
+      tr: Sunum ve Işıklandırma
+    description:
+      en: Photo Mode captures high-quality scene images, and HDR lighting can be adjusted in real time.
+      tr: Fotoğraf Modu yüksek kaliteli sahne görüntüleri alır ve HDR ışıklandırma gerçek zamanlı olarak ayarlanabilir.
+  - title:
+      en: Export and Documentation
+      tr: Dışa Aktarım ve Dokümantasyon
+    description:
+      en: Designed parks can be exported as FBX and GLB files, while generated BOM lists can be saved as PDF documents.
+      tr: Tasarlanan parklar FBX ve GLB dosyaları olarak dışa aktarılabilir; oluşturulan BOM listeleri PDF belgesi olarak kaydedilebilir.
+  - title:
+      en: Map-based Area Drawing
+      tr: Harita Tabanlı Alan Çizimi
+    description:
+      en: Users can draw areas over imagery retrieved from Google Maps.
+      tr: Kullanıcılar Google Maps üzerinden alınan görüntüler üzerinde alan çizebilir.
+gallery: []
+links: {}
