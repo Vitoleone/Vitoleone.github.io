@@ -53,6 +53,33 @@ components:
         label: Alternative text
         component: localized-string
         required: true
+  page-block:
+    type: object
+    fields:
+      - name: id
+        label: Block
+        type: string
+        required: true
+        description: Use a supported block id. Home: hero, featured-projects, projects, skills, experience, about, contact. Project: overview, mechanics, media, technologies, details, links, gallery.
+      - { name: enabled, label: Visible, type: boolean, required: true }
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        options: { min: 1, step: 1 }
+      - name: variant
+        label: Surface style
+        type: string
+        required: true
+        description: Choose standard, muted, or accent.
+      - name: spacing
+        label: Vertical spacing
+        type: string
+        required: true
+        description: Choose compact, standard, or spacious.
+      - { name: eyebrow, label: Eyebrow text, component: localized-string }
+      - { name: title, label: Heading override, component: localized-string }
+      - { name: description, label: Description override, component: localized-text }
 
 content:
   - name: projects
@@ -137,6 +164,13 @@ content:
                       media: project-videos
                       extensions: [mp4, webm, mkv]
                   - { name: caption, label: Caption, component: localized-string, required: true }
+      - name: pageBlocks
+        label: Project page layout
+        component: page-block
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.id} ({fields.order})"
               - name: drive
                 label: Google Drive video
                 fields:
@@ -162,6 +196,30 @@ content:
           - { name: store, label: Store URL, type: string }
           - { name: source, label: Source URL, type: string }
           - { name: info, label: Project information URL, type: string }
+
+  - name: layouts
+    label: Page layouts
+    type: collection
+    path: src/content/layouts
+    format: yaml
+    filename: "{name}.yml"
+    subfolders: false
+    view:
+      primary: kind
+      fields: [kind]
+    fields:
+      - name: kind
+        label: Layout page
+        type: string
+        required: true
+        description: Keep the existing value: home or project.
+      - name: blocks
+        label: Ordered blocks
+        component: page-block
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.id} ({fields.order})"
 
   - name: profile
     label: Profile
