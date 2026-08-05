@@ -1,0 +1,37 @@
+kind: project
+blocks:
+  - id: overview
+    enabled: true
+    order: 1
+    variant: standard
+    spacing: standard
+  - id: mechanics
+    enabled: true
+    order: 2
+    variant: standard
+    spacing: standard
+  - id: media
+    enabled: false
+    order: 3
+    variant: standard
+    spacing: standard
+  - id: technologies
+    enabled: true
+    order: 4
+    variant: standard
+    spacing: standard
+  - id: details
+    enabled: true
+    order: 5
+    variant: standard
+    spacing: standard
+  - id: links
+    enabled: true
+    order: 6
+    variant: standard
+    spacing: standard
+  - id: gallery
+    enabled: true
+    order: 7
+    variant: standard
+    spacing: standard

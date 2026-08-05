@@ -10,6 +10,7 @@ import {
   siteSettingsSchema,
   skillSchema,
 } from './lib/content/schemas';
+import { layoutDocumentSchema } from './lib/content/layout-schemas';
 
 const yamlPattern = '**/*.{yml,yaml}';
 
@@ -52,4 +53,9 @@ const siteSettings = defineCollection({
   schema: siteSettingsSchema,
 });
 
-export const collections = { projects, profile, experience, skills, siteSettings };
+const layouts = defineCollection({
+  loader: glob({ base: './src/content/layouts', pattern: yamlPattern }),
+  schema: layoutDocumentSchema,
+});
+
+export const collections = { projects, profile, experience, skills, siteSettings, layouts };

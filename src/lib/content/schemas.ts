@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { googleDriveShareUrlSchema } from './google-drive';
+import { projectBlockSchema } from './layout-schemas';
 
 const requiredText = z.string().trim().min(1, 'This field cannot be empty.');
 const slugSchema = requiredText.regex(
@@ -89,6 +90,7 @@ export const projectSchema = z
     releaseYear: z.number().int().min(1970).max(2100).optional(),
     cover: projectImageSchema.optional(),
     technologies: z.array(requiredText).default([]),
+    pageBlocks: z.array(projectBlockSchema).optional(),
     projectWork: projectWorkSchema.optional(),
     contributions: z.array(projectWorkSchema).default([]),
     gallery: z.array(projectImageSchema).default([]),
