@@ -4,6 +4,7 @@ import {
   formatExperienceRange,
   getAlternateLanguage,
   getLocalizedPath,
+  getProjectPath,
   localize,
 } from '../../src/lib/ui/presentation';
 
@@ -30,6 +31,18 @@ describe('localized portfolio presentation', () => {
     expect(getAlternateLanguage('en')).toBe('tr');
     expect(getAlternateLanguage('tr')).toBe('en');
   });
+
+  it.each([
+    ['/', 'match-squares', 'en', '/projects/match-squares/'],
+    ['/', 'match-squares', 'tr', '/tr/projects/match-squares/'],
+    ['/portfolio', 'match-squares', 'en', '/portfolio/projects/match-squares/'],
+    ['/portfolio/', 'match-squares', 'tr', '/portfolio/tr/projects/match-squares/'],
+  ] as const)(
+    'builds a base-aware project route from %s for %s',
+    (base, slug, language, expected) => {
+      expect(getProjectPath(slug, language, base)).toBe(expected);
+    },
+  );
 
   it.each([
     ['2025-01', '2025-12', 'en', 'Jan 2025 — Dec 2025'],

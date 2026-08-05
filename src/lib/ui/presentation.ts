@@ -31,6 +31,14 @@ export function getLocalizedPath(page: PageKey, language: Language, base = '/'):
   return `${prefix}${languageSegment}${pageSegment}`;
 }
 
+export function getProjectPath(slug: string, language: Language, base = '/'): string {
+  const normalizedBase = normalizeBasePath(base);
+  const prefix = normalizedBase === '/' ? '/' : `${normalizedBase}/`;
+  const languageSegment = language === 'tr' ? 'tr/' : '';
+
+  return `${prefix}${languageSegment}projects/${slug}/`;
+}
+
 function formatMonth(value: string, language: Language): string {
   const [year, month] = value.split('-');
   const monthIndex = Number(month) - 1;

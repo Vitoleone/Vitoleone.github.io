@@ -1,20 +1,27 @@
 ---
 import Icon from './Icon.astro';
 import { getUiCopy } from '../lib/ui/copy';
-import { getLocalizedPath, type Language, type PageKey } from '../lib/ui/presentation';
+import { getLocalizedPath, getProjectPath, type Language, type PageKey } from '../lib/ui/presentation';
+
+type SitePage = PageKey | 'project' | 'not-found';
 
 interface Props {
   language: Language;
-  page: PageKey;
+  page: SitePage;
+  projectSlug?: string;
 }
 
-const { language, page } = Astro.props;
+const { language, page, projectSlug } = Astro.props;
 const copy = getUiCopy(language);
 const base = import.meta.env.BASE_URL;
 const homeHref = getLocalizedPath('home', language, base);
 const aboutHref = getLocalizedPath('about', language, base);
-const englishHref = getLocalizedPath(page, 'en', base);
-const turkishHref = getLocalizedPath(page, 'tr', base);
+const englishHref = page === 'project' && projectSlug
+  ? getProjectPath(projectSlug, 'en', base)
+  : getLocalizedPath(page === 'about' ? 'about' : 'home', 'en', base);
+const turkishHref = page === 'project' && projectSlug
+  ? getProjectPath(projectSlug, 'tr', base)
+  : getLocalizedPath(page === 'about' ? 'about' : 'home', 'tr', base);
 ---
 
 <header class="site-header" data-site-header>

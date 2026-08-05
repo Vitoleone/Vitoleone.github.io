@@ -1,0 +1,159 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import Icon from '../components/Icon.astro';
+import ProjectCarousel from '../components/ProjectCarousel.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getVisibleCtas } from '../lib/content/helpers';
+import { createProjectJsonLd } from '../lib/seo/structured-data';
+import { getUiCopy } from '../lib/ui/copy';
+import {
+  getLocalizedPath,
+  getProjectPath,
+  localize,
+  type Language,
+} from '../lib/ui/presentation';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  language: Language;
+}
+
+const { project, language } = Astro.props;
+const [profileEntries, settingsEntries] = await Promise.all([
+  getCollection('profile'),
+  getCollection('siteSettings'),
+]);
+const profileEntry = profileEntries[0];
+const settingsEntry = settingsEntries[0];
+if (!profileEntry || !settingsEntry) {
+  throw new Error('Project pages require profile and site settings content.');
+}
+
+const profile = profileEntry.data;
+const settings = settingsEntry.data;
+const data = project.data;
+const copy = getUiCopy(language);
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/project-media/*.{avif,gif,jpeg,jpg,png,svg,webp}',
+  { eager: true },
+);
+const coverName = data.cover?.src.split('/').at(-1);
+const cover = coverName ? images[`/src/assets/project-media/${coverName}`]?.default : undefined;
+const projectPath = getProjectPath(data.slug, language, import.meta.env.BASE_URL);
+const canonicalUrl = new URL(projectPath, settings.siteUrl).toString();
+const coverUrl = cover ? new URL(cover.src, settings.siteUrl).toString() : undefined;
+const pageTitle = `${localize(data.title, language)} | ${profile.name}`;
+const ctas = getVisibleCtas(data.links);
+const ctaLabels = {
+  play: copy.ctaPlay,
+  store: copy.ctaStore,
+  source: copy.ctaSource,
+  info: copy.ctaInfo,
+};
+const labels = language === 'tr'
+  ? {
+      eyebrow: 'Proje dosyası',
+      back: 'Tüm projelere dön',
+      overview: 'Proje özeti',
+      details: 'Proje bilgileri',
+      links: 'Proje bağlantıları',
+    }
+  : {
+      eyebrow: 'Project file',
+      back: 'Back to all projects',
+      overview: 'Project overview',
+      details: 'Project details',
+      links: 'Project links',
+    };
+const creativeWork = createProjectJsonLd(data, profile, language, canonicalUrl, coverUrl);
+const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_URL)}#projects`;
+---
+
+<BaseLayout
+  language={language}
+  page="project"
+  projectSlug={data.slug}
+  title={pageTitle}
+  description={localize(data.description, language)}
+  settings={settings}
+  profile={profile}
+  ogType="article"
+  ogImage={coverUrl}
+  structuredData={[creativeWork]}
+>
+  <article class="project-detail">
+    <header class="project-detail__hero section">
+      <div class="shell">
+        <a class="text-link project-detail__back" href={projectsHref}>← {labels.back}</a>
+        <div class="project-detail__hero-grid">
+          <div class="project-detail__heading">
+            <p class="eyebrow"><span aria-hidden="true">//</span> {labels.eyebrow}</p>
+            <h1>{localize(data.title, language)}</h1>
+            <p class="project-detail__summary">{localize(data.summary, language)}</p>
+          </div>
+
+          <div class="project-detail__cover">
+            {cover && data.cover ? (
+              <img
+                src={cover.src}
+                width={cover.width}
+                height={cover.height}
+                alt={localize(data.cover.alt, language)}
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <div class="project-media__unavailable" role="img" aria-label={localize(data.title, language)}>
+                NO SIGNAL
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="project-overview section" aria-labelledby="project-overview-title">
+      <div class="shell project-overview__grid">
+        <div class="project-overview__copy">
+          <p class="eyebrow"><span aria-hidden="true">//</span> {labels.overview}</p>
+          <h2 id="project-overview-title">{labels.overview}</h2>
+          <p>{localize(data.description, language)}</p>
+
+          {data.technologies.length > 0 && (
+            <ul class="tag-list" aria-label={copy.technologies}>
+              {data.technologies.map((technology) => <li>{technology}</li>)}
+            </ul>
+          )}
+        </div>
+
+        <aside class="project-overview__meta" aria-label={labels.details}>
+          <h2>{labels.details}</h2>
+          <dl>
+            <div><dt>{copy.role}</dt><dd>{localize(data.role, language)}</dd></div>
+            {data.developer && <div><dt>{copy.developer}</dt><dd>{data.developer}</dd></div>}
+            {data.publisher && <div><dt>{copy.publisher}</dt><dd>{data.publisher}</dd></div>}
+            {data.releaseYear && <div><dt>{copy.released}</dt><dd>{data.releaseYear}</dd></div>}
+          </dl>
+
+          {ctas.length > 0 && (
+            <div class="project-overview__links" aria-label={labels.links}>
+              {ctas.map((cta) => (
+                <a class="button button--ghost" href={cta.href} target="_blank" rel="noreferrer">
+                  {ctaLabels[cta.kind]}
+                  <span class="sr-only"> ({copy.externalLink})</span>
+                  <Icon name="external" size={17} />
+                </a>
+              ))}
+            </div>
+          )}
+        </aside>
+      </div>
+    </section>
+
+    <ProjectCarousel project={project} language={language} />
+    <ProjectGallery project={project} language={language} />
+  </article>
+</BaseLayout>

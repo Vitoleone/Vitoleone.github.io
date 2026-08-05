@@ -1,0 +1,87 @@
+---
+import type { ImageMetadata } from 'astro';
+
+import type { Project } from '../lib/content/schemas';
+import type { Language } from '../lib/ui/presentation';
+import { localize } from '../lib/ui/presentation';
+
+type ContributionMedia = NonNullable<Project['contributions'][number]['media']>;
+
+interface Props {
+  media: ContributionMedia;
+  language: Language;
+  active?: boolean;
+}
+
+const { media, language, active = false } = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/project-media/*.{avif,gif,jpeg,jpg,png,svg,webp}',
+  { eager: true },
+);
+const videos = import.meta.glob<string>('/src/assets/project-media/*.{m4v,mkv,mov,mp4,webm}', {
+  eager: true,
+  import: 'default',
+  query: '?url',
+});
+const sourceName = media.type === 'drive' ? undefined : media.src.split('/').at(-1);
+const image = media.type === 'image' && sourceName
+  ? images[`/src/assets/project-media/${sourceName}`]?.default
+  : undefined;
+const video = media.type === 'video' && sourceName
+  ? videos[`/src/assets/project-media/${sourceName}`]
+  : undefined;
+const caption = media.type === 'image' ? localize(media.alt, language) : localize(media.caption, language);
+const drivePermissionNote = language === 'tr'
+  ? 'Video açılmazsa dosyanın Google Drive paylaşım ayarı “Bağlantıya sahip olan herkes — Görüntüleyen” olmalıdır.'
+  : 'If the video does not open, its Google Drive sharing must be set to “Anyone with the link — Viewer.”';
+const driveFallback = language === 'tr' ? 'Videoyu Google Drive’da aç' : 'Open video in Google Drive';
+---
+
+<figure class="project-media">
+  {media.type === 'image' && image && (
+    <img
+      src={image.src}
+      width={image.width}
+      height={image.height}
+      alt={caption}
+      loading="lazy"
+      decoding="async"
+    />
+  )}
+
+  {media.type === 'image' && !image && (
+    <div class="project-media__unavailable" role="img" aria-label={caption}>NO SIGNAL</div>
+  )}
+
+  {media.type === 'video' && video && (
+    <video controls preload="metadata" playsinline aria-label={caption}>
+      <source src={video} />
+    </video>
+  )}
+
+  {media.type === 'video' && !video && (
+    <div class="project-media__unavailable" role="img" aria-label={caption}>NO SIGNAL</div>
+  )}
+
+  {media.type === 'drive' && (
+    <div class="project-media__drive">
+      <div class="project-media__frame">
+        <iframe
+          src={active ? media.shareUrl : undefined}
+          data-src={media.shareUrl}
+          title={caption}
+          loading="lazy"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p>
+        <a href={media.shareUrl} target="_blank" rel="noreferrer">{driveFallback}</a>
+        <span class="sr-only"> ({language === 'tr' ? 'yeni sekmede açılır' : 'opens in a new tab'})</span>
+      </p>
+      <p class="project-media__permission-note">{drivePermissionNote}</p>
+    </div>
+  )}
+
+  <figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,50 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+
+import type { Language } from '../lib/ui/presentation';
+import { localize } from '../lib/ui/presentation';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  language: Language;
+}
+
+const { project, language } = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/project-media/*.{avif,gif,jpeg,jpg,png,svg,webp}',
+  { eager: true },
+);
+const gallery = project.data.gallery.flatMap((item) => {
+  const name = item.src.split('/').at(-1);
+  const image = name ? images[`/src/assets/project-media/${name}`]?.default : undefined;
+  return image ? [{ item, image }] : [];
+});
+const label = language === 'tr' ? 'Galeri' : 'Gallery';
+---
+
+{gallery.length > 0 && (
+  <section class="project-gallery section" aria-labelledby="project-gallery-title">
+    <div class="shell">
+      <p class="eyebrow"><span aria-hidden="true">//</span> {label}</p>
+      <h2 id="project-gallery-title">{label}</h2>
+      <ul role="list">
+        {gallery.map(({ item, image }) => (
+          <li>
+            <figure>
+              <img
+                src={image.src}
+                width={image.width}
+                height={image.height}
+                alt={localize(item.alt, language)}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>{localize(item.alt, language)}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

@@ -7,31 +7,60 @@ import type { CollectionEntry } from 'astro:content';
 
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { createPersonJsonLd } from '../lib/seo/structured-data';
 import { getUiCopy } from '../lib/ui/copy';
-import { getLocalizedPath, type Language, type PageKey } from '../lib/ui/presentation';
+import { getLocalizedPath, getProjectPath, type Language, type PageKey } from '../lib/ui/presentation';
+
+type SitePage = PageKey | 'project' | 'not-found';
 
 interface Props {
   language: Language;
-  page: PageKey;
+  page: SitePage;
+  projectSlug?: string;
   title: string;
   description: string;
   settings: CollectionEntry<'siteSettings'>['data'];
+  profile?: CollectionEntry<'profile'>['data'];
   restoreLanguagePreference?: boolean;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  structuredData?: unknown[];
 }
 
 const {
   language,
   page,
+  projectSlug,
   title,
   description,
   settings,
+  profile,
   restoreLanguagePreference = false,
+  noindex = false,
+  ogType = 'website',
+  ogImage,
+  structuredData = [],
 } = Astro.props;
 const copy = getUiCopy(language);
 const base = import.meta.env.BASE_URL;
-const englishUrl = new URL(getLocalizedPath(page, 'en', base), settings.siteUrl);
-const turkishUrl = new URL(getLocalizedPath(page, 'tr', base), settings.siteUrl);
+const englishPath = page === 'project' && projectSlug
+  ? getProjectPath(projectSlug, 'en', base)
+  : page === 'about'
+    ? getLocalizedPath('about', 'en', base)
+    : getLocalizedPath('home', 'en', base);
+const turkishPath = page === 'project' && projectSlug
+  ? getProjectPath(projectSlug, 'tr', base)
+  : page === 'about'
+    ? getLocalizedPath('about', 'tr', base)
+    : getLocalizedPath('home', 'tr', base);
+const englishUrl = new URL(englishPath, settings.siteUrl);
+const turkishUrl = new URL(turkishPath, settings.siteUrl);
 const canonicalUrl = language === 'tr' ? turkishUrl : englishUrl;
+const jsonLd = [
+  ...(profile ? [createPersonJsonLd(profile, settings, language)] : []),
+  ...structuredData,
+];
 ---
 
 <!doctype html>
@@ -73,19 +102,30 @@ const canonicalUrl = language === 'tr' ? turkishUrl : englishUrl;
     <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b1018" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href={englishUrl} />
-    <link rel="alternate" hreflang="tr" href={turkishUrl} />
-    <link rel="alternate" hreflang="x-default" href={englishUrl} />
-    <meta property="og:type" content="website" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={englishUrl} />}
+    {!noindex && <link rel="alternate" hreflang="tr" href={turkishUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={englishUrl} />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={language === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={language === 'tr' ? 'en_US' : 'tr_TR'} />
     <meta property="og:site_name" content={settings.siteTitle[language]} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {jsonLd.map((entry) => (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(entry).replaceAll('<', '\\u003c')}
+      ></script>
+    ))}
   </head>
   <body>
     <a class="skip-link" href="#main-content">{copy.skip}</a>
-    <Header language={language} page={page} />
+    <Header language={language} page={page} projectSlug={projectSlug} />
     <main id="main-content">
       <slot />
     </main>

@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLocalizedPath } from '../lib/ui/presentation';
+
+const [profileEntries, settingsEntries] = await Promise.all([
+  getCollection('profile'),
+  getCollection('siteSettings'),
+]);
+const profile = profileEntries[0]?.data;
+const settings = settingsEntries[0]?.data;
+if (!profile || !settings) throw new Error('404 page requires profile and site settings content.');
+const homeHref = getLocalizedPath('home', 'en', import.meta.env.BASE_URL);
+---
+
+<BaseLayout
+  language="en"
+  page="not-found"
+  title={`Page not found | ${profile.name}`}
+  description="The requested portfolio page could not be found."
+  settings={settings}
+  noindex
+>
+  <section class="not-found section">
+    <div class="shell">
+      <p class="eyebrow"><span aria-hidden="true">//</span> ERROR 404</p>
+      <h1>Page not found</h1>
+      <p>The route you requested is not in this build. Aradığınız sayfa bu yapıda bulunamadı.</p>
+      <a class="button button--primary" href={homeHref}>Return home</a>
+    </div>
+  </section>
+</BaseLayout>
