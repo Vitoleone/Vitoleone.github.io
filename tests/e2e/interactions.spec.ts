@@ -34,12 +34,14 @@ test('project technology filters update cards, pressed state, and result announc
   await expect(list.locator('[data-filter-status]')).toContainText(String(expectedVisible));
 });
 
-test('a project shows one work block with a local native video and no carousel controls', async ({ page }) => {
+test('a project places mechanics media in overview with no standalone work section', async ({ page }) => {
   await page.goto('/projects/ship-action-demo/');
 
-  const work = page.locator('.project-work');
-  await expect(work).toHaveCount(1);
-  await expect(work.getByRole('heading', { name: 'Missions and Resources' })).toBeVisible();
-  await expect(work.locator('video[controls][preload="metadata"]')).toHaveCount(1);
+  const overview = page.locator('.project-overview');
+  const mechanics = overview.locator('[data-editor-block="mechanics"]');
+  await expect(mechanics).toHaveCount(1);
+  await expect(mechanics.getByRole('heading', { name: 'Missions and Resources' })).toBeVisible();
+  await expect(overview.locator('video[controls][preload="metadata"]')).toHaveCount(1);
+  await expect(page.locator('.project-work')).toHaveCount(0);
   await expect(page.locator('[data-project-carousel]')).toHaveCount(0);
 });

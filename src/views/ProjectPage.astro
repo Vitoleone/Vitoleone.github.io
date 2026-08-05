@@ -3,10 +3,11 @@ import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import Icon from '../components/Icon.astro';
-import ProjectWork from '../components/ProjectWork.astro';
+import ProjectMechanics from '../components/ProjectMechanics.astro';
 import ProjectGallery from '../components/ProjectGallery.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getVisibleCtas } from '../lib/content/helpers';
+import { normalizeBlocks } from '../lib/content/layout-schemas';
 import { createProjectJsonLd } from '../lib/seo/structured-data';
 import { getUiCopy } from '../lib/ui/copy';
 import {
@@ -22,9 +23,10 @@ interface Props {
 }
 
 const { project, language } = Astro.props;
-const [profileEntries, settingsEntries] = await Promise.all([
+const [profileEntries, settingsEntries, layoutEntries] = await Promise.all([
   getCollection('profile'),
   getCollection('siteSettings'),
+  getCollection('layouts'),
 ]);
 const profileEntry = profileEntries[0];
 const settingsEntry = settingsEntries[0];
@@ -47,6 +49,17 @@ const canonicalUrl = new URL(projectPath, settings.siteUrl).toString();
 const coverUrl = cover ? new URL(cover.src, settings.siteUrl).toString() : undefined;
 const pageTitle = `${localize(data.title, language)} | ${profile.name}`;
 const ctas = getVisibleCtas(data.links);
+const defaultProjectLayout = layoutEntries
+  .map((entry) => entry.data)
+  .find((layout) => layout.kind === 'project');
+const defaultProjectBlocks = defaultProjectLayout?.kind === 'project'
+  ? defaultProjectLayout.blocks
+  : [];
+const projectBlocks = normalizeBlocks(data.pageBlocks ?? defaultProjectBlocks, 'project');
+const mechanicsBlock = projectBlocks.find((block) => block.id === 'mechanics');
+const mechanics = data.projectWork
+  ?? data.contributions.find((contribution) => contribution.media)
+  ?? data.contributions[0];
 const ctaLabels = {
   play: copy.ctaPlay,
   store: copy.ctaStore,
@@ -115,12 +128,20 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
       </div>
     </header>
 
-    <section class="project-overview section" aria-labelledby="project-overview-title">
+    <section class="project-overview section" aria-labelledby="project-overview-title" data-editor-block="overview">
       <div class="shell project-overview__grid">
         <div class="project-overview__copy">
           <p class="eyebrow"><span aria-hidden="true">//</span> {labels.overview}</p>
           <h2 id="project-overview-title">{labels.overview}</h2>
           <p>{localize(data.description, language)}</p>
+
+          {mechanicsBlock && mechanics && (
+            <ProjectMechanics
+              mechanics={mechanics}
+              language={language}
+              visible={mechanicsBlock.enabled}
+            />
+          )}
 
           {data.technologies.length > 0 && (
             <ul class="tag-list" aria-label={copy.technologies}>
@@ -153,7 +174,6 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
       </div>
     </section>
 
-    <ProjectWork project={project} language={language} />
     <ProjectGallery project={project} language={language} />
   </article>
 </BaseLayout>

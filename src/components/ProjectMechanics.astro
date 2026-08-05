@@ -1,0 +1,22 @@
+---
+import ProjectMedia from './ProjectMedia.astro';
+import type { Project } from '../lib/content/schemas';
+import type { Language } from '../lib/ui/presentation';
+import { localize } from '../lib/ui/presentation';
+
+interface Props {
+  mechanics: Project['projectWork'] | Project['contributions'][number] | undefined;
+  language: Language;
+  visible: boolean;
+}
+
+const { mechanics, language, visible } = Astro.props;
+---
+
+{mechanics && visible && (
+  <div class="project-mechanics" data-editor-block="mechanics">
+    <h3>{localize(mechanics.title, language)}</h3>
+    <p>{localize(mechanics.description, language)}</p>
+    {mechanics.media && <ProjectMedia media={mechanics.media} language={language} />}
+  </div>
+)}
