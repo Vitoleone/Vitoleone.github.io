@@ -1,0 +1,247 @@
+# Pages CMS stores project images here. Video uploads are intentionally excluded:
+# only the image category and web-image extensions are allowed. Add/migrate videos
+# through the repository workflow so large binaries are reviewed deliberately.
+media:
+  - name: project-images
+    label: Project images
+    input: src/assets/project-media
+    output: ../../assets/project-media
+    categories: [image]
+    extensions: [jpg, jpeg, png, webp, avif, gif]
+    rename: safe
+
+settings:
+  content:
+    merge: false
+  commit:
+    identity: user
+    templates:
+      create: "content: create {path}"
+      update: "content: update {path}"
+      delete: "content: delete {path}"
+      rename: "content: rename {oldPath} to {newPath}"
+
+components:
+  localized-string:
+    type: object
+    fields:
+      - { name: en, label: English, type: string, required: true }
+      - { name: tr, label: Türkçe, type: string, required: true }
+  localized-text:
+    type: object
+    fields:
+      - { name: en, label: English, type: text, required: true }
+      - { name: tr, label: Türkçe, type: text, required: true }
+  localized-image:
+    type: object
+    fields:
+      - name: src
+        label: Image
+        type: image
+        required: true
+        options:
+          media: project-images
+          extensions: [jpg, jpeg, png, webp, avif, gif]
+      - name: alt
+        label: Alternative text
+        component: localized-string
+        required: true
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    format: yaml
+    filename:
+      template: "{slug}.yml"
+      field: false
+    subfolders: false
+    view:
+      primary: title.en
+      fields: [title.en, published, featured, order, slug]
+      sort: [order, title.en]
+      search: [title.en, title.tr, slug, technologies]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: slug
+        label: URL slug
+        type: string
+        required: true
+        description: Unique lowercase route name; use letters, numbers and single hyphens only.
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: Use lowercase letters, numbers and single hyphens only.
+      - { name: published, label: Published, type: boolean, required: true }
+      - { name: featured, label: Featured, type: boolean, required: true }
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        description: Positive whole number; lower numbers appear first.
+        options: { min: 1, step: 1 }
+      - { name: title, label: Title, component: localized-string, required: true }
+      - { name: summary, label: Card summary, component: localized-text, required: true }
+      - { name: description, label: Project description, component: localized-text, required: true }
+      - { name: role, label: Role, component: localized-string, required: true }
+      - { name: developer, label: Developer, type: string }
+      - { name: publisher, label: Publisher, type: string }
+      - name: releaseYear
+        label: Release year
+        type: number
+        options: { min: 1970, max: 2100, step: 1 }
+      - { name: cover, label: Cover image, component: localized-image }
+      - name: technologies
+        label: Technologies
+        type: string
+        list: true
+      - name: contributions
+        label: Contributions
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title.en} ({index})"
+        fields:
+          - { name: title, label: Title, component: localized-string, required: true }
+          - { name: description, label: Description, component: localized-text, required: true }
+          - name: media
+            label: Optional media
+            type: block
+            blockKey: type
+            blocks:
+              - name: image
+                label: Image
+                fields:
+                  - name: src
+                    label: Image
+                    type: image
+                    required: true
+                    options:
+                      media: project-images
+                      extensions: [jpg, jpeg, png, webp, avif, gif]
+                  - { name: alt, label: Alternative text, component: localized-string, required: true }
+              - name: video
+                label: Existing repository video
+                fields:
+                  - name: src
+                    label: Repository path
+                    type: string
+                    required: true
+                    description: Video uploading is disabled. Enter a reviewed existing file path only.
+                  - { name: caption, label: Caption, component: localized-string, required: true }
+              - name: drive
+                label: Google Drive video
+                fields:
+                  - name: shareUrl
+                    label: Drive file sharing URL
+                    type: string
+                    required: true
+                    description: Use a drive.google.com file link. In Drive, set General access to "Anyone with the link" and role to "Viewer" before publishing.
+                  - { name: caption, label: Caption, component: localized-string, required: true }
+      - name: gallery
+        label: Gallery
+        component: localized-image
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.alt.en} ({index})"
+      - name: links
+        label: Calls to action
+        type: object
+        description: Leave a URL empty to hide its button on the site.
+        fields:
+          - { name: play, label: Play URL, type: string }
+          - { name: store, label: Store URL, type: string }
+          - { name: source, label: Source URL, type: string }
+
+  - name: profile
+    label: Profile
+    type: file
+    path: src/content/profile/profile.yml
+    format: yaml
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - { name: headline, label: Headline, component: localized-string, required: true }
+      - { name: bio, label: Biography, component: localized-text, required: true }
+      - { name: location, label: Location, component: localized-string }
+      - { name: avatar, label: Portrait, component: localized-image }
+      - { name: email, label: Email, type: string, required: true }
+      - name: cvUrl
+        label: CV URL
+        type: string
+        description: Leave empty when no verified public CV URL is available; the CTA will be hidden.
+
+  - name: experience
+    label: Experience
+    type: collection
+    path: src/content/experience
+    format: yaml
+    filename: "{company}.yml"
+    subfolders: false
+    view:
+      primary: company
+      fields: [company, role.en, startDate, endDate, order]
+      sort: [order, company]
+      default: { sort: order, order: asc }
+    fields:
+      - { name: company, label: Company, type: string, required: true }
+      - { name: role, label: Role, component: localized-string, required: true }
+      - { name: summary, label: Summary, component: localized-text, required: true }
+      - name: startDate
+        label: Start month
+        type: string
+        required: true
+        description: Use YYYY-MM.
+        pattern: "^\\d{4}-(?:0[1-9]|1[0-2])$"
+      - name: endDate
+        label: End month
+        type: string
+        required: true
+        description: Use YYYY-MM or the lowercase word "present".
+        pattern: "^(?:\\d{4}-(?:0[1-9]|1[0-2])|present)$"
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        options: { min: 1, step: 1 }
+
+  - name: skills
+    label: Skills
+    type: collection
+    path: src/content/skills
+    format: yaml
+    filename: "{name.en}.yml"
+    subfolders: false
+    view:
+      primary: name.en
+      fields: [name.en, category.en, featured, order]
+      sort: [order, name.en]
+      default: { sort: order, order: asc }
+    fields:
+      - { name: name, label: Skill, component: localized-string, required: true }
+      - { name: category, label: Category, component: localized-string, required: true }
+      - { name: order, label: Display order, type: number, required: true, options: { min: 1, step: 1 } }
+      - { name: featured, label: Featured, type: boolean, required: true }
+
+  - name: site-settings
+    label: Site settings
+    type: file
+    path: src/content/site-settings/site.yml
+    format: yaml
+    fields:
+      - { name: siteTitle, label: Site title, component: localized-string, required: true }
+      - { name: siteDescription, label: Site description, component: localized-text, required: true }
+      - { name: siteUrl, label: Canonical site URL, type: string, required: true }
+      - name: socials
+        label: Social links
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.label} ({index})"
+        fields:
+          - { name: label, label: Label, type: string, required: true }
+          - { name: url, label: URL, type: string, required: true }
