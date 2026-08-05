@@ -61,6 +61,7 @@ const jsonLd = [
   ...(profile ? [createPersonJsonLd(profile, settings, language)] : []),
   ...structuredData,
 ];
+const editorPreview = import.meta.env.DEV && Astro.url.searchParams.get('editorPreview') === '1';
 ---
 
 <!doctype html>
@@ -97,6 +98,13 @@ const jsonLd = [
         base: root.dataset.basePath ?? '/',
       });
     </script>
+    {editorPreview && (
+      <script>
+        import { installEditorPreviewBridge } from '../scripts/editor-preview';
+
+        installEditorPreviewBridge();
+      </script>
+    )}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)" />

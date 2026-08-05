@@ -10,6 +10,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import SkillGrid from '../components/SkillGrid.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedProjects } from '../lib/content/helpers';
+import { normalizeBlocks, type HomeBlock } from '../lib/content/layout-schemas';
 import { getUiCopy } from '../lib/ui/copy';
 import { getLocalizedPath, localize, type Language } from '../lib/ui/presentation';
 
@@ -19,12 +20,13 @@ interface Props {
 
 const { language } = Astro.props;
 const copy = getUiCopy(language);
-const [projectEntries, profileEntries, experienceEntries, skillEntries, settingsEntries] = await Promise.all([
+const [projectEntries, profileEntries, experienceEntries, skillEntries, settingsEntries, layoutEntries] = await Promise.all([
   getCollection('projects'),
   getCollection('profile'),
   getCollection('experience'),
   getCollection('skills'),
   getCollection('siteSettings'),
+  getCollection('layouts'),
 ]);
 
 const profileEntry = profileEntries[0];
@@ -39,6 +41,18 @@ const otherProjects = projects.filter(({ data }) => !data.featured);
 const experience = experienceEntries.toSorted((left, right) => left.data.order - right.data.order);
 const skills = skillEntries.toSorted((left, right) => left.data.order - right.data.order);
 const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
+const homeLayout = layoutEntries
+  .map((entry) => entry.data)
+  .find((layout) => layout.kind === 'home');
+const homeBlocks = normalizeBlocks(homeLayout?.kind === 'home' ? homeLayout.blocks : [], 'home');
+const homeBlock = (id: HomeBlock['id']) => homeBlocks.find((block) => block.id === id)!;
+const editorAttributes = (block: HomeBlock) => ({
+  'data-editor-block': block.id,
+  'data-editor-variant': block.variant,
+  'data-editor-spacing': block.spacing,
+  hidden: !block.enabled,
+  style: `order: ${block.order}`,
+});
 ---
 
 <BaseLayout
@@ -50,7 +64,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
   profile={profile}
   restoreLanguagePreference={language === 'en'}
 >
-  <section class="hero section">
+  <section class="hero section" {...editorAttributes(homeBlock('hero'))}>
     <div class="hero__grid shell">
       <div class="hero__content">
         <p class="status-line"><span></span>{copy.heroStatus}</p>
@@ -89,7 +103,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
   </section>
 
   {featuredProjects.length > 0 && (
-    <section class="section featured-section">
+    <section class="section featured-section" {...editorAttributes(homeBlock('featured-projects'))}>
       <div class="shell">
         <SectionHeading
           eyebrow={copy.featuredEyebrow}
@@ -103,7 +117,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
     </section>
   )}
 
-  <section class="section projects-section" id="projects">
+  <section class="section projects-section" id="projects" {...editorAttributes(homeBlock('projects'))}>
     <div class="shell">
       <SectionHeading
         eyebrow={copy.projectsEyebrow}
@@ -114,7 +128,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
     </div>
   </section>
 
-  <section class="section skills-section">
+  <section class="section skills-section" {...editorAttributes(homeBlock('skills'))}>
     <div class="shell section-split">
       <SectionHeading
         eyebrow={copy.skillsEyebrow}
@@ -125,7 +139,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
     </div>
   </section>
 
-  <section class="section experience-section">
+  <section class="section experience-section" {...editorAttributes(homeBlock('experience'))}>
     <div class="shell section-split section-split--wide">
       <SectionHeading
         eyebrow={copy.experienceEyebrow}
@@ -136,7 +150,7 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
     </div>
   </section>
 
-  <section class="section profile-section">
+  <section class="section profile-section" {...editorAttributes(homeBlock('about'))}>
     <div class="shell profile-panel">
       <div class="profile-panel__number" aria-hidden="true">P1</div>
       <div>
@@ -150,5 +164,5 @@ const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
     </div>
   </section>
 
-  <ContactSection language={language} profile={profile} settings={settings} />
+  <ContactSection language={language} profile={profile} settings={settings} layoutBlock={homeBlock('contact')} />
 </BaseLayout>

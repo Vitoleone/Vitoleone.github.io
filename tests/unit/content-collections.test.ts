@@ -85,7 +85,7 @@ describe('migrated portfolio content', () => {
     expect(projects.every(({ published }) => published)).toBe(true);
   });
 
-  it('keeps The Boss metadata exact and its initial carousel content explicitly exemplary', () => {
+  it('keeps The Boss metadata exact with a single verified mechanics placeholder', () => {
     const boss = projectSchema.parse(
       loadCollection('projects').find(({ data }) => data.slug === 'the-boss-gangster-criminal-empire')
         ?.data,
@@ -112,7 +112,7 @@ describe('migrated portfolio content', () => {
       title: { en: 'Game Mechanics', tr: 'Oyun Mekaniği' },
     });
     expect(boss.projectWork?.media).toBeUndefined();
-    expect(boss.contributions.length).toBeGreaterThanOrEqual(2);
+    expect(boss.contributions).toEqual([]);
     for (const contribution of boss.contributions) {
       expect(contribution.title.en).toMatch(/^Example\b/);
       expect(contribution.title.tr).toMatch(/^Örnek\b/u);

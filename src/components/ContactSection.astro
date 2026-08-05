@@ -5,18 +5,35 @@ import Icon from './Icon.astro';
 import SectionHeading from './SectionHeading.astro';
 import { getUiCopy } from '../lib/ui/copy';
 import type { Language } from '../lib/ui/presentation';
+import type { HomeBlock } from '../lib/content/layout-schemas';
 
 interface Props {
   language: Language;
   profile: CollectionEntry<'profile'>['data'];
   settings: CollectionEntry<'siteSettings'>['data'];
+  layoutBlock?: HomeBlock;
 }
 
-const { language, profile, settings } = Astro.props;
+const { language, profile, settings, layoutBlock } = Astro.props;
 const copy = getUiCopy(language);
+const resolvedLayoutBlock: HomeBlock = layoutBlock ?? {
+  id: 'contact',
+  enabled: true,
+  order: 7,
+  variant: 'standard',
+  spacing: 'spacious',
+};
 ---
 
-<section class="contact-section section" id="contact">
+<section
+  class="contact-section section"
+  id="contact"
+  data-editor-block={resolvedLayoutBlock.id}
+  data-editor-variant={resolvedLayoutBlock.variant}
+  data-editor-spacing={resolvedLayoutBlock.spacing}
+  hidden={!resolvedLayoutBlock.enabled}
+  style={`order: ${resolvedLayoutBlock.order}`}
+>
   <div class="shell contact-section__grid">
     <SectionHeading
       eyebrow={copy.contactEyebrow}

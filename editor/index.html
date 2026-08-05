@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolyo Editörü</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header><strong>Portfolyo Editörü</strong><span id="state" role="status">Yükleniyor…</span></header>
+    <main>
+      <aside aria-label="Sayfa ve bloklar">
+        <label for="page">Düzenlenecek sayfa</label>
+        <select id="page"><option value="home">Ana sayfa</option><option value="project">Proje sayfası</option></select>
+        <h2>Bloklar</h2><div id="blocks"></div>
+      </aside>
+      <section class="inspector" aria-label="Blok ayarları">
+        <h2 id="selected-title">Blok seçin</h2>
+        <div id="fields"></div>
+        <div class="actions"><button id="discard" type="button">Değişiklikleri geri al</button><button id="save" type="button">Kaydet</button><button id="commit" type="button">Kaydet ve commit et</button></div>
+        <p id="message" role="alert"></p>
+      </section>
+      <section class="preview"><div class="preview-head"><h2>Canlı önizleme</h2><button id="mobile" type="button" aria-pressed="false">Mobil görünüm</button></div><iframe title="Portfolio preview" src="http://127.0.0.1:4321/?editorPreview=1"></iframe></section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
