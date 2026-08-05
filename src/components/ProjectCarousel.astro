@@ -45,7 +45,7 @@ const labels = language === 'tr'
           data-carousel-viewport
         >
           {contributions.map((contribution, index) => (
-            <article
+            <div
               class="project-carousel__slide"
               role="group"
               aria-roledescription="slide"
@@ -61,7 +61,7 @@ const labels = language === 'tr'
               {contribution.media && (
                 <ProjectMedia media={contribution.media} language={language} active={index === 0} />
               )}
-            </article>
+            </div>
           ))}
         </div>
 
@@ -125,17 +125,19 @@ const labels = language === 'tr'
     };
 
     const setActive = (index: number) => {
-      activeIndex = Math.min(Math.max(index, 0), slides.length - 1);
+      const nextIndex = Math.min(Math.max(index, 0), slides.length - 1);
+      const indexChanged = nextIndex !== activeIndex;
+      activeIndex = nextIndex;
       dots.forEach((dot, dotIndex) => {
         if (dotIndex === activeIndex) dot.setAttribute('aria-current', 'true');
         else dot.removeAttribute('aria-current');
       });
       if (previous) previous.disabled = activeIndex === 0;
       if (next) next.disabled = activeIndex === slides.length - 1;
-      if (status) {
+      if (indexChanged && status) {
         status.textContent = `${activeIndex + 1} / ${slides.length}: ${slides[activeIndex].dataset.slideTitle ?? ''}`;
       }
-      activateMedia(activeIndex);
+      if (indexChanged) activateMedia(activeIndex);
     };
 
     const goTo = (index: number) => {
