@@ -37,5 +37,12 @@ contributions:
       en: Example content reserved for approved project material; no unverified production detail is asserted here.
       tr: Onaylı proje materyalleri için ayrılmış örnek içerik; burada doğrulanmamış bir üretim detayı öne sürülmez.
 gallery: []
+projectWork:
+  title:
+    en: Game Mechanics
+    tr: Oyun Mekaniği
+  description:
+    en: This section is reserved for an approved explanation of the gameplay mechanic shown in the project video.
+    tr: Bu bölüm, proje videosunda gösterilen oyun mekaniğinin onaylı açıklaması için ayrılmıştır.
 links:
   store: https://store.steampowered.com/app/2774040/The_Boss_Gangster_Criminal_Empire/

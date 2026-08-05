@@ -66,6 +66,14 @@ const contributionMediaSchema = z.discriminatedUnion('type', [
     .strict(),
 ]);
 
+const projectWorkSchema = z
+  .object({
+    title: localizedTextSchema,
+    description: localizedTextSchema,
+    media: contributionMediaSchema.optional(),
+  })
+  .strict();
+
 export const projectSchema = z
   .object({
     slug: slugSchema,
@@ -81,17 +89,8 @@ export const projectSchema = z
     releaseYear: z.number().int().min(1970).max(2100).optional(),
     cover: projectImageSchema.optional(),
     technologies: z.array(requiredText).default([]),
-    contributions: z
-      .array(
-        z
-          .object({
-            title: localizedTextSchema,
-            description: localizedTextSchema,
-            media: contributionMediaSchema.optional(),
-          })
-          .strict(),
-      )
-      .default([]),
+    projectWork: projectWorkSchema.optional(),
+    contributions: z.array(projectWorkSchema).default([]),
     gallery: z.array(projectImageSchema).default([]),
     links: z
       .object({

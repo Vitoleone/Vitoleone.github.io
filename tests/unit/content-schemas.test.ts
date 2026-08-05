@@ -21,7 +21,6 @@ const validProject = {
   description: localized('A longer description.', 'Daha uzun bir açıklama.'),
   role: localized('Gameplay Programmer', 'Oynanış Programcısı'),
   technologies: ['Unity', 'C#'],
-  contributions: [],
   gallery: [],
   links: {},
 };
@@ -45,6 +44,26 @@ describe('portfolio collection schemas', () => {
       slug: 'sample-game',
       published: true,
       order: 2,
+    });
+  });
+
+  it('accepts one optional project-work block with a legacy local video', () => {
+    const project = projectSchema.parse({
+      ...validProject,
+      projectWork: {
+        title: localized('Gameplay', 'Oynanış'),
+        description: localized('A focused gameplay explanation.', 'Odaklı bir oynanış açıklaması.'),
+        media: {
+          type: 'video',
+          src: '/images/FishMasters.mp4',
+          caption: localized('Gameplay video', 'Oynanış videosu'),
+        },
+      },
+    });
+
+    expect(project.projectWork?.media).toMatchObject({
+      type: 'video',
+      src: '/images/FishMasters.mp4',
     });
   });
 

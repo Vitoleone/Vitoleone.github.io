@@ -30,6 +30,7 @@ const image = media.type === 'image' && sourceName
 const video = media.type === 'video' && sourceName
   ? videos[`/src/assets/project-media/${sourceName}`]
   : undefined;
+const legacyVideo = media.type === 'video' && media.src.startsWith('/images/') ? media.src : undefined;
 const caption = media.type === 'image' ? localize(media.alt, language) : localize(media.caption, language);
 const drivePermissionNote = language === 'tr'
   ? 'Video açılmazsa dosyanın Google Drive paylaşım ayarı “Bağlantıya sahip olan herkes — Görüntüleyen” olmalıdır.'
@@ -53,13 +54,13 @@ const driveFallback = language === 'tr' ? 'Videoyu Google Drive’da aç' : 'Ope
     <div class="project-media__unavailable" role="img" aria-label={caption}>NO SIGNAL</div>
   )}
 
-  {media.type === 'video' && video && (
+  {media.type === 'video' && (video || legacyVideo) && (
     <video controls preload="metadata" playsinline aria-label={caption}>
-      <source src={video} />
+      <source src={legacyVideo ?? video} />
     </video>
   )}
 
-  {media.type === 'video' && !video && (
+  {media.type === 'video' && !video && !legacyVideo && (
     <div class="project-media__unavailable" role="img" aria-label={caption}>NO SIGNAL</div>
   )}
 

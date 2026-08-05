@@ -3,7 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import Icon from '../components/Icon.astro';
-import ProjectCarousel from '../components/ProjectCarousel.astro';
+import ProjectWork from '../components/ProjectWork.astro';
 import ProjectGallery from '../components/ProjectGallery.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getVisibleCtas } from '../lib/content/helpers';
@@ -153,7 +153,7 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
       </div>
     </section>
 
-    <ProjectCarousel project={project} language={language} />
+    <ProjectWork project={project} language={language} />
     <ProjectGallery project={project} language={language} />
   </article>
 </BaseLayout>

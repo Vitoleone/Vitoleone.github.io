@@ -9,6 +9,13 @@ media:
     categories: [image]
     extensions: [jpg, jpeg, png, webp, avif, gif]
     rename: safe
+  - name: project-videos
+    label: Project videos
+    input: src/assets/project-media
+    output: ../../assets/project-media
+    categories: [video]
+    extensions: [mp4, webm, mkv]
+    rename: safe
 
 settings:
   content:
@@ -97,13 +104,9 @@ content:
         label: Technologies
         type: string
         list: true
-      - name: contributions
-        label: Contributions
+      - name: projectWork
+        label: Project work
         type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{fields.title.en} ({index})"
         fields:
           - { name: title, label: Title, component: localized-string, required: true }
           - { name: description, label: Description, component: localized-text, required: true }
@@ -124,13 +127,15 @@ content:
                       extensions: [jpg, jpeg, png, webp, avif, gif]
                   - { name: alt, label: Alternative text, component: localized-string, required: true }
               - name: video
-                label: Existing repository video
+                label: Local video
                 fields:
                   - name: src
-                    label: Repository path
-                    type: string
+                    label: Video file
+                    type: file
                     required: true
-                    description: Video uploading is disabled. Enter a reviewed existing file path only.
+                    options:
+                      media: project-videos
+                      extensions: [mp4, webm, mkv]
                   - { name: caption, label: Caption, component: localized-string, required: true }
               - name: drive
                 label: Google Drive video

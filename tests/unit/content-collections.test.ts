@@ -47,7 +47,7 @@ describe('migrated portfolio content', () => {
     const collections = [
       { entries: loadCollection('projects'), schema: projectSchema, expectedCount: 12 },
       { entries: loadCollection('profile'), schema: profileSchema, expectedCount: 1 },
-      { entries: loadCollection('experience'), schema: experienceSchema, expectedCount: 5 },
+      { entries: loadCollection('experience'), schema: experienceSchema, expectedCount: 6 },
       { entries: loadCollection('skills'), schema: skillSchema, expectedCount: 6 },
       { entries: loadCollection('site-settings'), schema: siteSettingsSchema, expectedCount: 1 },
     ];
@@ -108,6 +108,10 @@ describe('migrated portfolio content', () => {
           'https://store.steampowered.com/app/2774040/The_Boss_Gangster_Criminal_Empire/',
       },
     });
+    expect(boss.projectWork).toMatchObject({
+      title: { en: 'Game Mechanics', tr: 'Oyun Mekaniği' },
+    });
+    expect(boss.projectWork?.media).toBeUndefined();
     expect(boss.contributions.length).toBeGreaterThanOrEqual(2);
     for (const contribution of boss.contributions) {
       expect(contribution.title.en).toMatch(/^Example\b/);
@@ -184,5 +188,18 @@ describe('migrated portfolio content', () => {
         '../../assets/project-media/../../../content/profile/profile.yml',
       ),
     ).toThrow(/should resolve within/u);
+  });
+
+  it('includes the current BEF GAMES Gameplay Programmer role', () => {
+    const befGames = experienceSchema.parse(
+      loadCollection('experience').find(({ data }) => data.company === 'BEF GAMES')?.data,
+    );
+
+    expect(befGames).toMatchObject({
+      company: 'BEF GAMES',
+      role: { en: 'Gameplay Programmer', tr: 'Oynanış Programcısı' },
+      startDate: '2025-11',
+      endDate: 'present',
+    });
   });
 });
