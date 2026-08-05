@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { formatExperienceRange, localize, type Language } from '../lib/ui/presentation';
+
+interface Props {
+  entries: CollectionEntry<'experience'>[];
+  language: Language;
+}
+
+const { entries, language } = Astro.props;
+---
+
+<ol class="timeline">
+  {entries.map(({ data }) => (
+    <li>
+      <div class="timeline__marker" aria-hidden="true"></div>
+      <p class="timeline__date">{formatExperienceRange(data.startDate, data.endDate, language)}</p>
+      <div class="timeline__content">
+        <p class="timeline__company">{data.company}</p>
+        <h3>{localize(data.role, language)}</h3>
+        <p>{localize(data.summary, language)}</p>
+      </div>
+    </li>
+  ))}
+</ol>

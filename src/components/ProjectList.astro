@@ -1,0 +1,83 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import ProjectCard from './ProjectCard.astro';
+import { getUiCopy } from '../lib/ui/copy';
+import { getTechnologyFilters, normalizeFilterKey } from '../lib/ui/project-filters';
+import type { Language } from '../lib/ui/presentation';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  language: Language;
+}
+
+const { projects, language } = Astro.props;
+const copy = getUiCopy(language);
+const filters = getTechnologyFilters(projects.map(({ data }) => data));
+---
+
+<div
+  class="project-list"
+  data-project-list
+  data-result-one={copy.resultOne}
+  data-result-many={copy.resultMany}
+  data-result-zero={copy.resultZero}
+>
+  <div class="filter-bar" role="group" aria-label={copy.filterLabel}>
+    <button type="button" class="filter-chip" data-project-filter="all" aria-pressed="true">
+      {copy.filterAll}<span>{projects.length}</span>
+    </button>
+    {filters.map((filter) => (
+      <button type="button" class="filter-chip" data-project-filter={filter.key} aria-pressed="false">
+        {filter.label}<span>{filter.count}</span>
+      </button>
+    ))}
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-filter-status>{copy.resultMany.replace('{count}', String(projects.length))}</p>
+
+  <ul class="project-grid" role="list">
+    {projects.map((project) => (
+      <li data-project-item data-technologies={project.data.technologies.map(normalizeFilterKey).join(' ')}>
+        <ProjectCard project={project} language={language} />
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  import { projectMatchesFilter } from '../lib/ui/project-filters';
+
+  document.querySelectorAll<HTMLElement>('[data-project-list]').forEach((list) => {
+    const buttons = [...list.querySelectorAll<HTMLButtonElement>('[data-project-filter]')];
+    const items = [...list.querySelectorAll<HTMLElement>('[data-project-item]')];
+    const status = list.querySelector<HTMLElement>('[data-filter-status]');
+
+    const update = (filter: string) => {
+      let visibleCount = 0;
+
+      for (const item of items) {
+        const technologies = (item.dataset.technologies ?? '').split(' ').filter(Boolean);
+        const visible = projectMatchesFilter(technologies, filter);
+        item.hidden = !visible;
+        if (visible) visibleCount += 1;
+      }
+
+      for (const button of buttons) {
+        button.setAttribute('aria-pressed', String(button.dataset.projectFilter === filter));
+      }
+
+      if (!status) return;
+      const template = visibleCount === 0
+        ? list.dataset.resultZero
+        : visibleCount === 1
+          ? list.dataset.resultOne
+          : list.dataset.resultMany;
+      status.textContent = (template ?? '').replace('{count}', String(visibleCount));
+    };
+
+    for (const button of buttons) {
+      button.addEventListener('click', () => update(button.dataset.projectFilter ?? 'all'));
+    }
+  });
+</script>

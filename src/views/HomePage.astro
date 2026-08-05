@@ -1,0 +1,152 @@
+---
+import { getCollection } from 'astro:content';
+
+import ContactSection from '../components/ContactSection.astro';
+import ExperienceList from '../components/ExperienceList.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectList from '../components/ProjectList.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SkillGrid from '../components/SkillGrid.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedProjects } from '../lib/content/helpers';
+import { getUiCopy } from '../lib/ui/copy';
+import { getLocalizedPath, localize, type Language } from '../lib/ui/presentation';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const copy = getUiCopy(language);
+const [projectEntries, profileEntries, experienceEntries, skillEntries, settingsEntries] = await Promise.all([
+  getCollection('projects'),
+  getCollection('profile'),
+  getCollection('experience'),
+  getCollection('skills'),
+  getCollection('siteSettings'),
+]);
+
+const profileEntry = profileEntries[0];
+const settingsEntry = settingsEntries[0];
+if (!profileEntry || !settingsEntry) throw new Error('Home page requires profile and site settings content.');
+
+const profile = profileEntry.data;
+const settings = settingsEntry.data;
+const projects = getPublishedProjects(projectEntries);
+const featuredProjects = projects.filter(({ data }) => data.featured);
+const otherProjects = projects.filter(({ data }) => !data.featured);
+const experience = experienceEntries.toSorted((left, right) => left.data.order - right.data.order);
+const skills = skillEntries.toSorted((left, right) => left.data.order - right.data.order);
+const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
+---
+
+<BaseLayout
+  language={language}
+  page="home"
+  title={settings.siteTitle[language]}
+  description={settings.siteDescription[language]}
+  settings={settings}
+>
+  <section class="hero section">
+    <div class="hero__grid shell">
+      <div class="hero__content">
+        <p class="status-line"><span></span>{copy.heroStatus}</p>
+        <p class="hero__kicker">{copy.heroKicker}</p>
+        <h1>
+          {copy.heroTitleStart}
+          <span>{copy.heroTitleAccent}</span>
+          {copy.heroTitleEnd}
+        </h1>
+        <p class="hero__lead">{localize(profile.bio, language)}</p>
+        <div class="button-row">
+          <a class="button button--primary" href="#projects">{copy.exploreProjects}<Icon name="arrow" /></a>
+          <a class="button button--ghost" href={aboutHref}>{copy.meetDeveloper}</a>
+          {profile.cvUrl && (
+            <a class="button button--ghost" href={profile.cvUrl} target="_blank" rel="noreferrer">
+              {copy.viewCv}<Icon name="external" size={17} />
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="hero-console" aria-hidden="true">
+        <div class="hero-console__header"><span>PLAYER_PROFILE</span><span>ONLINE</span></div>
+        <div class="hero-console__radar">
+          <span class="hero-console__orbit"></span>
+          <span class="hero-console__core">NB</span>
+        </div>
+        <div class="hero-console__readout">
+          <span>ENGINE</span><strong>UNITY</strong>
+          <span>PROJECTS</span><strong>{String(projects.length).padStart(2, '0')}</strong>
+          <span>MODE</span><strong>BUILD</strong>
+        </div>
+      </div>
+    </div>
+    <div class="hero__coordinates shell" aria-hidden="true"><span>40.65° N</span><span>26.88° E</span></div>
+  </section>
+
+  {featuredProjects.length > 0 && (
+    <section class="section featured-section">
+      <div class="shell">
+        <SectionHeading
+          eyebrow={copy.featuredEyebrow}
+          title={copy.featuredTitle}
+          description={copy.featuredDescription}
+        />
+        <div class="featured-stack">
+          {featuredProjects.map((project) => <ProjectCard project={project} language={language} featured />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section projects-section" id="projects">
+    <div class="shell">
+      <SectionHeading
+        eyebrow={copy.projectsEyebrow}
+        title={copy.projectsTitle}
+        description={copy.projectsDescription}
+      />
+      <ProjectList projects={otherProjects} language={language} />
+    </div>
+  </section>
+
+  <section class="section skills-section">
+    <div class="shell section-split">
+      <SectionHeading
+        eyebrow={copy.skillsEyebrow}
+        title={copy.skillsTitle}
+        description={copy.skillsDescription}
+      />
+      <SkillGrid skills={skills} language={language} />
+    </div>
+  </section>
+
+  <section class="section experience-section">
+    <div class="shell section-split section-split--wide">
+      <SectionHeading
+        eyebrow={copy.experienceEyebrow}
+        title={copy.experienceTitle}
+        description={copy.experienceDescription}
+      />
+      <ExperienceList entries={experience} language={language} />
+    </div>
+  </section>
+
+  <section class="section profile-section">
+    <div class="shell profile-panel">
+      <div class="profile-panel__number" aria-hidden="true">P1</div>
+      <div>
+        <p class="eyebrow"><span aria-hidden="true">//</span> {copy.profileEyebrow}</p>
+        <h2>{copy.profileTitle}</h2>
+      </div>
+      <div>
+        <p>{localize(profile.bio, language)}</p>
+        <a class="text-link" href={aboutHref}>{copy.readAbout}<Icon name="arrow" size={17} /></a>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection language={language} profile={profile} settings={settings} />
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { getUiCopy } from '../lib/ui/copy';
+import type { Language } from '../lib/ui/presentation';
+
+interface Props {
+  language: Language;
+  profile: CollectionEntry<'profile'>['data'];
+  settings: CollectionEntry<'siteSettings'>['data'];
+}
+
+const { language, profile, settings } = Astro.props;
+const copy = getUiCopy(language);
+---
+
+<section class="contact-section section" id="contact">
+  <div class="shell contact-section__grid">
+    <SectionHeading
+      eyebrow={copy.contactEyebrow}
+      title={copy.contactTitle}
+      description={copy.contactDescription}
+    />
+    <div class="contact-panel">
+      <a class="button button--primary contact-panel__email" href={`mailto:${profile.email}`}>
+        <Icon name="mail" />{copy.emailMe}
+      </a>
+      <a class="contact-panel__address" href={`mailto:${profile.email}`}>{profile.email}</a>
+      {settings.socials.length > 0 && (
+        <div class="contact-panel__socials" aria-label={copy.socialProfiles}>
+          {settings.socials.map((social) => (
+            <a href={social.url} target="_blank" rel="noreferrer">
+              <Icon name="link" size={17} />{social.label}
+              <span class="sr-only"> ({copy.externalLink})</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>

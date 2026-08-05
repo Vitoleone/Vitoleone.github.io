@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { localize, type Language } from '../lib/ui/presentation';
+
+interface Props {
+  skills: CollectionEntry<'skills'>[];
+  language: Language;
+}
+
+const { skills, language } = Astro.props;
+---
+
+<ul class="skill-grid" role="list">
+  {skills.map(({ data }, index) => (
+    <li>
+      <span class="skill-grid__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+      <strong>{localize(data.name, language)}</strong>
+      <span>{localize(data.category, language)}</span>
+      {data.featured && <span class="skill-grid__signal" aria-hidden="true"></span>}
+    </li>
+  ))}
+</ul>

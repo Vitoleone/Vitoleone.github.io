@@ -1,0 +1,152 @@
+---
+import Icon from './Icon.astro';
+import { getUiCopy } from '../lib/ui/copy';
+import { getLocalizedPath, type Language, type PageKey } from '../lib/ui/presentation';
+
+interface Props {
+  language: Language;
+  page: PageKey;
+}
+
+const { language, page } = Astro.props;
+const copy = getUiCopy(language);
+const base = import.meta.env.BASE_URL;
+const homeHref = getLocalizedPath('home', language, base);
+const aboutHref = getLocalizedPath('about', language, base);
+const englishHref = getLocalizedPath(page, 'en', base);
+const turkishHref = getLocalizedPath(page, 'tr', base);
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-header__inner shell">
+    <a class="brand" href={homeHref} aria-label={`${copy.home} — Noyan Berkay Aşkın`}>
+      <span class="brand__mark" aria-hidden="true">NB</span>
+      <span class="brand__text">
+        <strong>Noyan Berkay</strong>
+        <span>ASKIN // DEV</span>
+      </span>
+    </a>
+
+    <button
+      class="icon-button menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      aria-label={copy.menuOpen}
+      data-menu-toggle
+      data-open-label={copy.menuOpen}
+      data-close-label={copy.menuClose}
+    >
+      <span data-menu-open-icon><Icon name="menu" /></span>
+      <span data-menu-close-icon><Icon name="x" /></span>
+    </button>
+
+    <div class="site-header__panel" id="primary-navigation" data-menu-panel>
+      <nav class="primary-nav" aria-label={copy.navLabel}>
+        <a href={homeHref} aria-current={page === 'home' ? 'page' : undefined}>{copy.home}</a>
+        <a href={`${homeHref}#projects`}>{copy.projects}</a>
+        <a href={aboutHref} aria-current={page === 'about' ? 'page' : undefined}>{copy.about}</a>
+        <a href={`${homeHref}#contact`}>{copy.contact}</a>
+      </nav>
+
+      <div class="site-tools">
+        <div class="language-switch" aria-label={copy.language}>
+          <a
+            href={englishHref}
+            lang="en"
+            hreflang="en"
+            aria-current={language === 'en' ? 'true' : undefined}
+            aria-label={copy.english}
+            data-language-choice="en"
+          >EN</a>
+          <span aria-hidden="true">/</span>
+          <a
+            href={turkishHref}
+            lang="tr"
+            hreflang="tr"
+            aria-current={language === 'tr' ? 'true' : undefined}
+            aria-label={copy.turkish}
+            data-language-choice="tr"
+          >TR</a>
+        </div>
+
+        <button
+          class="icon-button theme-toggle"
+          type="button"
+          aria-label={copy.useDarkTheme}
+          data-theme-toggle
+          data-dark-label={copy.useDarkTheme}
+          data-light-label={copy.useLightTheme}
+        >
+          <span class="theme-toggle__sun"><Icon name="sun" /></span>
+          <span class="theme-toggle__moon"><Icon name="moon" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const menuToggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = header?.querySelector<HTMLElement>('[data-menu-panel]');
+
+  const setMenuOpen = (open: boolean) => {
+    if (!header || !menuToggle || !panel) return;
+    header.dataset.menuOpen = String(open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+    menuToggle.setAttribute(
+      'aria-label',
+      open ? menuToggle.dataset.closeLabel ?? '' : menuToggle.dataset.openLabel ?? '',
+    );
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  panel?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
+      setMenuOpen(false);
+      menuToggle.focus();
+    }
+  });
+
+  const themeToggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const syncThemeButton = () => {
+    if (!themeToggle) return;
+    const dark = document.documentElement.dataset.theme === 'dark';
+    themeToggle.setAttribute(
+      'aria-label',
+      dark ? themeToggle.dataset.lightLabel ?? '' : themeToggle.dataset.darkLabel ?? '',
+    );
+    themeToggle.setAttribute('aria-pressed', String(dark));
+  };
+
+  syncThemeButton();
+  themeToggle?.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+    document.documentElement.style.colorScheme = nextTheme;
+    try {
+      localStorage.setItem('portfolio-theme', nextTheme);
+    } catch {
+      // The selected theme still applies when storage is unavailable.
+    }
+    syncThemeButton();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-language-choice]').forEach((choice) => {
+    choice.addEventListener('click', () => {
+      try {
+        localStorage.setItem('portfolio-language', choice.dataset.languageChoice ?? 'en');
+      } catch {
+        // The destination URL still selects the requested language.
+      }
+    });
+  });
+</script>

@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+
+import ContactSection from '../components/ContactSection.astro';
+import ExperienceList from '../components/ExperienceList.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SkillGrid from '../components/SkillGrid.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getUiCopy } from '../lib/ui/copy';
+import { localize, type Language } from '../lib/ui/presentation';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const copy = getUiCopy(language);
+const [profileEntries, experienceEntries, skillEntries, settingsEntries] = await Promise.all([
+  getCollection('profile'),
+  getCollection('experience'),
+  getCollection('skills'),
+  getCollection('siteSettings'),
+]);
+
+const profileEntry = profileEntries[0];
+const settingsEntry = settingsEntries[0];
+if (!profileEntry || !settingsEntry) throw new Error('About page requires profile and site settings content.');
+
+const profile = profileEntry.data;
+const settings = settingsEntry.data;
+const experience = experienceEntries.toSorted((left, right) => left.data.order - right.data.order);
+const skills = skillEntries.toSorted((left, right) => left.data.order - right.data.order);
+const pageTitle = language === 'tr'
+  ? `Hakkımda | ${profile.name}`
+  : `About | ${profile.name}`;
+---
+
+<BaseLayout
+  language={language}
+  page="about"
+  title={pageTitle}
+  description={localize(profile.bio, language)}
+  settings={settings}
+>
+  <section class="about-hero section">
+    <div class="shell about-hero__grid">
+      <div class="about-hero__content">
+        <p class="eyebrow"><span aria-hidden="true">//</span> {copy.aboutEyebrow}</p>
+        <h1>{copy.aboutTitle}</h1>
+        <p class="about-hero__lead">{copy.aboutIntro}</p>
+        <p>{localize(profile.bio, language)}</p>
+      </div>
+      <dl class="profile-stats">
+        <div><dt>{copy.aboutFocusLabel}</dt><dd>{copy.aboutFocus}</dd></div>
+        <div><dt>{copy.aboutExperienceLabel}</dt><dd>{copy.aboutExperience}</dd></div>
+        <div><dt>{copy.aboutProfessionalLabel}</dt><dd>{copy.aboutProfessional}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section about-skills">
+    <div class="shell section-split">
+      <SectionHeading
+        eyebrow={copy.skillsEyebrow}
+        title={copy.skillsTitle}
+        description={copy.skillsDescription}
+      />
+      <SkillGrid skills={skills} language={language} />
+    </div>
+  </section>
+
+  <section class="section about-experience">
+    <div class="shell section-split section-split--wide">
+      <SectionHeading
+        eyebrow={copy.aboutJourneyEyebrow}
+        title={copy.aboutJourneyTitle}
+        description={copy.experienceDescription}
+      />
+      <ExperienceList entries={experience} language={language} />
+    </div>
+  </section>
+
+  <ContactSection language={language} profile={profile} settings={settings} />
+</BaseLayout>
