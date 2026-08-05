@@ -4,13 +4,15 @@ import type { CollectionEntry } from 'astro:content';
 
 import type { Language } from '../lib/ui/presentation';
 import { localize } from '../lib/ui/presentation';
+import type { ProjectBlock } from '../lib/content/layout-schemas';
 
 interface Props {
   project: CollectionEntry<'projects'>;
   language: Language;
+  layoutBlock?: ProjectBlock;
 }
 
-const { project, language } = Astro.props;
+const { project, language, layoutBlock } = Astro.props;
 const images = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/project-media/*.{avif,gif,jpeg,jpg,png,svg,webp}',
   { eager: true },
@@ -24,7 +26,15 @@ const label = language === 'tr' ? 'Galeri' : 'Gallery';
 ---
 
 {gallery.length > 0 && (
-  <section class="project-gallery section" aria-labelledby="project-gallery-title">
+  <section
+    class="project-gallery section"
+    aria-labelledby="project-gallery-title"
+    data-editor-block={layoutBlock?.id ?? 'gallery'}
+    data-editor-variant={layoutBlock?.variant ?? 'standard'}
+    data-editor-spacing={layoutBlock?.spacing ?? 'standard'}
+    hidden={layoutBlock ? !layoutBlock.enabled : undefined}
+    style={layoutBlock ? `order: ${layoutBlock.order}` : undefined}
+  >
     <div class="shell">
       <p class="eyebrow"><span aria-hidden="true">//</span> {label}</p>
       <h2 id="project-gallery-title">{label}</h2>

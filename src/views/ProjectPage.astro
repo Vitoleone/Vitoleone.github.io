@@ -56,7 +56,13 @@ const defaultProjectBlocks = defaultProjectLayout?.kind === 'project'
   ? defaultProjectLayout.blocks
   : [];
 const projectBlocks = normalizeBlocks(data.pageBlocks ?? defaultProjectBlocks, 'project');
-const mechanicsBlock = projectBlocks.find((block) => block.id === 'mechanics');
+const projectBlock = (id: typeof projectBlocks[number]['id']) => projectBlocks.find((block) => block.id === id)!;
+const overviewBlock = projectBlock('overview');
+const mechanicsBlock = projectBlock('mechanics');
+const technologiesBlock = projectBlock('technologies');
+const detailsBlock = projectBlock('details');
+const linksBlock = projectBlock('links');
+const galleryBlock = projectBlock('gallery');
 const mechanics = data.projectWork
   ?? data.contributions.find((contribution) => contribution.media)
   ?? data.contributions[0];
@@ -128,7 +134,15 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
       </div>
     </header>
 
-    <section class="project-overview section" aria-labelledby="project-overview-title" data-editor-block="overview">
+    <section
+      class="project-overview section"
+      aria-labelledby="project-overview-title"
+      data-editor-block={overviewBlock.id}
+      data-editor-variant={overviewBlock.variant}
+      data-editor-spacing={overviewBlock.spacing}
+      hidden={!overviewBlock.enabled}
+      style={`order: ${overviewBlock.order}`}
+    >
       <div class="shell project-overview__grid">
         <div class="project-overview__copy">
           <p class="eyebrow"><span aria-hidden="true">//</span> {labels.overview}</p>
@@ -143,24 +157,25 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
             />
           )}
 
-          {data.technologies.length > 0 && (
-            <ul class="tag-list" aria-label={copy.technologies}>
+          {technologiesBlock.enabled && data.technologies.length > 0 && (
+            <ul class="tag-list" aria-label={copy.technologies} data-editor-block={technologiesBlock.id}>
               {data.technologies.map((technology) => <li>{technology}</li>)}
             </ul>
           )}
         </div>
 
-        <aside class="project-overview__meta" aria-label={labels.details}>
-          <h2>{labels.details}</h2>
-          <dl>
-            <div><dt>{copy.role}</dt><dd>{localize(data.role, language)}</dd></div>
-            {data.developer && <div><dt>{copy.developer}</dt><dd>{data.developer}</dd></div>}
-            {data.publisher && <div><dt>{copy.publisher}</dt><dd>{data.publisher}</dd></div>}
-            {data.releaseYear && <div><dt>{copy.released}</dt><dd>{data.releaseYear}</dd></div>}
-          </dl>
+        {detailsBlock.enabled && (
+          <aside class="project-overview__meta" aria-label={labels.details} data-editor-block={detailsBlock.id}>
+            <h2>{labels.details}</h2>
+            <dl>
+              <div><dt>{copy.role}</dt><dd>{localize(data.role, language)}</dd></div>
+              {data.developer && <div><dt>{copy.developer}</dt><dd>{data.developer}</dd></div>}
+              {data.publisher && <div><dt>{copy.publisher}</dt><dd>{data.publisher}</dd></div>}
+              {data.releaseYear && <div><dt>{copy.released}</dt><dd>{data.releaseYear}</dd></div>}
+            </dl>
 
-          {ctas.length > 0 && (
-            <div class="project-overview__links" aria-label={labels.links}>
+            {linksBlock.enabled && ctas.length > 0 && (
+              <div class="project-overview__links" aria-label={labels.links} data-editor-block={linksBlock.id}>
               {ctas.map((cta) => (
                 <a class="button button--ghost" href={cta.href} target="_blank" rel="noreferrer">
                   {ctaLabels[cta.kind]}
@@ -168,12 +183,13 @@ const projectsHref = `${getLocalizedPath('home', language, import.meta.env.BASE_
                   <Icon name="external" size={17} />
                 </a>
               ))}
-            </div>
-          )}
-        </aside>
+              </div>
+            )}
+          </aside>
+        )}
       </div>
     </section>
 
-    <ProjectGallery project={project} language={language} />
+    <ProjectGallery project={project} language={language} layoutBlock={galleryBlock} />
   </article>
 </BaseLayout>
