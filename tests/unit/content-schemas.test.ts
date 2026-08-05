@@ -61,6 +61,85 @@ describe('portfolio collection schemas', () => {
     expect(result.links).toEqual({});
   });
 
+  it.each(['javascript:alert(1)', 'data:text/html,<h1>unsafe</h1>', 'mailto:hello@example.com'])(
+    'rejects non-HTTP project CTA protocol in %s',
+    (source) => {
+      expect(() =>
+        projectSchema.parse({
+          ...validProject,
+          links: { source },
+        }),
+      ).toThrow(/http/i);
+    },
+  );
+
+  it('accepts HTTP and HTTPS website links', () => {
+    const result = projectSchema.parse({
+      ...validProject,
+      links: {
+        play: 'http://example.com/play',
+        store: 'https://example.com/store',
+      },
+    });
+
+    expect(result.links).toEqual({
+      play: 'http://example.com/play',
+      store: 'https://example.com/store',
+    });
+  });
+
+  it('reports a validation error for a malformed website link', () => {
+    expect(() =>
+      projectSchema.parse({
+        ...validProject,
+        links: { play: 'not a URL' },
+      }),
+    ).toThrow(/URL/i);
+  });
+
+  it('rejects a non-HTTP profile CV link', () => {
+    expect(() =>
+      profileSchema.parse({
+        name: 'Vito Leone',
+        headline: localized('Game Developer', 'Oyun Geliştirici'),
+        bio: localized('English biography.', 'Türkçe biyografi.'),
+        email: 'hello@example.com',
+        cvUrl: 'javascript:alert(1)',
+      }),
+    ).toThrow(/http/i);
+  });
+
+  it('rejects a non-HTTP canonical site link', () => {
+    expect(() =>
+      siteSettingsSchema.parse({
+        siteTitle: localized('Portfolio', 'Portfolyo'),
+        siteDescription: localized('Game development portfolio.', 'Oyun geliştirme portfolyosu.'),
+        siteUrl: 'data:text/html,unsafe',
+        socials: [],
+      }),
+    ).toThrow(/http/i);
+  });
+
+  it('rejects a non-HTTP social link without changing profile email handling', () => {
+    expect(() =>
+      siteSettingsSchema.parse({
+        siteTitle: localized('Portfolio', 'Portfolyo'),
+        siteDescription: localized('Game development portfolio.', 'Oyun geliştirme portfolyosu.'),
+        siteUrl: 'https://vitoleone.github.io',
+        socials: [{ label: 'Email', url: 'mailto:hello@example.com' }],
+      }),
+    ).toThrow(/http/i);
+
+    const profile = profileSchema.parse({
+      name: 'Vito Leone',
+      headline: localized('Game Developer', 'Oyun Geliştirici'),
+      bio: localized('English biography.', 'Türkçe biyografi.'),
+      email: 'hello@example.com',
+    });
+
+    expect(profile.email).toBe('hello@example.com');
+  });
+
   it('validates profile, experience, skill and site settings entries', () => {
     expect(
       profileSchema.parse({

@@ -12,6 +12,12 @@ const displayOrderSchema = z
   .int('Order must be a whole number.')
   .positive('Order must be greater than zero.');
 const monthSchema = requiredText.regex(/^\d{4}-(?:0[1-9]|1[0-2])$/, 'Use YYYY-MM format.');
+const websiteUrlSchema = z
+  .url('Enter a complete URL, including http:// or https://.')
+  .refine(
+    (value) => ['http:', 'https:'].includes(new URL(value).protocol),
+    'Website URL must use http:// or https://.',
+  );
 
 export const localizedTextSchema = z
   .object({
@@ -26,7 +32,7 @@ const optionalUrlSchema = z.preprocess(
     const normalized = value.trim();
     return normalized.length > 0 ? normalized : undefined;
   },
-  z.url('Enter a complete URL, including https://.').optional(),
+  websiteUrlSchema.optional(),
 );
 
 const projectImageSchema = z
@@ -143,13 +149,13 @@ export const siteSettingsSchema = z
   .object({
     siteTitle: localizedTextSchema,
     siteDescription: localizedTextSchema,
-    siteUrl: z.url(),
+    siteUrl: websiteUrlSchema,
     socials: z
       .array(
         z
           .object({
             label: requiredText,
-            url: z.url(),
+            url: websiteUrlSchema,
           })
           .strict(),
       )

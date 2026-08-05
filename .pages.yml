@@ -54,7 +54,7 @@ content:
     path: src/content/projects
     format: yaml
     filename:
-      template: "{slug}.yml"
+      template: "{fields.slug}.yml"
       field: false
     subfolders: false
     view:
