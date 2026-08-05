@@ -12,9 +12,7 @@ export const homeBlockIdSchema = z.enum([
   'hero',
   'featured-projects',
   'projects',
-  'skills',
   'experience',
-  'about',
   'contact',
 ]);
 export const projectBlockIdSchema = z.enum([
@@ -75,10 +73,8 @@ const homeBlockDefaults: readonly HomeBlock[] = [
   { id: 'hero', enabled: true, order: 1, variant: 'standard', spacing: 'spacious' },
   { id: 'featured-projects', enabled: true, order: 2, variant: 'standard', spacing: 'standard' },
   { id: 'projects', enabled: true, order: 3, variant: 'standard', spacing: 'standard' },
-  { id: 'skills', enabled: true, order: 4, variant: 'muted', spacing: 'standard' },
-  { id: 'experience', enabled: true, order: 5, variant: 'standard', spacing: 'standard' },
-  { id: 'about', enabled: true, order: 6, variant: 'muted', spacing: 'standard' },
-  { id: 'contact', enabled: true, order: 7, variant: 'standard', spacing: 'spacious' },
+  { id: 'experience', enabled: true, order: 4, variant: 'standard', spacing: 'standard' },
+  { id: 'contact', enabled: true, order: 5, variant: 'standard', spacing: 'spacious' },
 ];
 
 const projectBlockDefaults: readonly ProjectBlock[] = [

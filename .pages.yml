@@ -60,7 +60,7 @@ components:
         label: Block
         type: string
         required: true
-        description: Use a supported block id. Home: hero, featured-projects, projects, skills, experience, about, contact. Project: overview, mechanics, media, technologies, details, links, gallery.
+        description: Use a supported block id. Home: hero, featured-projects, projects, experience, contact. Project: overview, mechanics, media, technologies, details, links, gallery.
       - { name: enabled, label: Visible, type: boolean, required: true }
       - name: order
         label: Display order

@@ -7,7 +7,6 @@ import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ProjectList from '../components/ProjectList.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import SkillGrid from '../components/SkillGrid.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedProjects } from '../lib/content/helpers';
 import { normalizeBlocks, type HomeBlock } from '../lib/content/layout-schemas';
@@ -20,11 +19,10 @@ interface Props {
 
 const { language } = Astro.props;
 const copy = getUiCopy(language);
-const [projectEntries, profileEntries, experienceEntries, skillEntries, settingsEntries, layoutEntries] = await Promise.all([
+const [projectEntries, profileEntries, experienceEntries, settingsEntries, layoutEntries] = await Promise.all([
   getCollection('projects'),
   getCollection('profile'),
   getCollection('experience'),
-  getCollection('skills'),
   getCollection('siteSettings'),
   getCollection('layouts'),
 ]);
@@ -39,7 +37,6 @@ const projects = getPublishedProjects(projectEntries);
 const featuredProjects = projects.filter(({ data }) => data.featured);
 const otherProjects = projects.filter(({ data }) => !data.featured);
 const experience = experienceEntries.toSorted((left, right) => left.data.order - right.data.order);
-const skills = skillEntries.toSorted((left, right) => left.data.order - right.data.order);
 const aboutHref = getLocalizedPath('about', language, import.meta.env.BASE_URL);
 const homeLayout = layoutEntries
   .map((entry) => entry.data)
@@ -128,17 +125,6 @@ const editorAttributes = (block: HomeBlock) => ({
     </div>
   </section>
 
-  <section class="section skills-section" {...editorAttributes(homeBlock('skills'))}>
-    <div class="shell section-split">
-      <SectionHeading
-        eyebrow={copy.skillsEyebrow}
-        title={copy.skillsTitle}
-        description={copy.skillsDescription}
-      />
-      <SkillGrid skills={skills} language={language} />
-    </div>
-  </section>
-
   <section class="section experience-section" {...editorAttributes(homeBlock('experience'))}>
     <div class="shell section-split section-split--wide">
       <SectionHeading
@@ -147,20 +133,6 @@ const editorAttributes = (block: HomeBlock) => ({
         description={copy.experienceDescription}
       />
       <ExperienceList entries={experience} language={language} />
-    </div>
-  </section>
-
-  <section class="section profile-section" {...editorAttributes(homeBlock('about'))}>
-    <div class="shell profile-panel">
-      <div class="profile-panel__number" aria-hidden="true">P1</div>
-      <div>
-        <p class="eyebrow"><span aria-hidden="true">//</span> {copy.profileEyebrow}</p>
-        <h2>{copy.profileTitle}</h2>
-      </div>
-      <div>
-        <p>{localize(profile.bio, language)}</p>
-        <a class="text-link" href={aboutHref}>{copy.readAbout}<Icon name="arrow" size={17} /></a>
-      </div>
     </div>
   </section>
 
