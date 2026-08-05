@@ -16,9 +16,17 @@ interface Props {
   title: string;
   description: string;
   settings: CollectionEntry<'siteSettings'>['data'];
+  restoreLanguagePreference?: boolean;
 }
 
-const { language, page, title, description, settings } = Astro.props;
+const {
+  language,
+  page,
+  title,
+  description,
+  settings,
+  restoreLanguagePreference = false,
+} = Astro.props;
 const copy = getUiCopy(language);
 const base = import.meta.env.BASE_URL;
 const englishUrl = new URL(getLocalizedPath(page, 'en', base), settings.siteUrl);
@@ -27,7 +35,13 @@ const canonicalUrl = language === 'tr' ? turkishUrl : englishUrl;
 ---
 
 <!doctype html>
-<html lang={language} data-theme="light">
+<html
+  lang={language}
+  data-theme="light"
+  data-page={page}
+  data-base-path={base}
+  data-language-preference-entry={restoreLanguagePreference ? 'true' : undefined}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,6 +56,17 @@ const canonicalUrl = language === 'tr' ? turkishUrl : englishUrl;
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
       })();
+    </script>
+    <script>
+      import { restoreLanguagePreference } from '../lib/ui/language-preference';
+
+      const root = document.documentElement;
+      restoreLanguagePreference({
+        language: root.lang === 'tr' ? 'tr' : 'en',
+        page: root.dataset.page === 'about' ? 'about' : 'home',
+        isRootEntry: root.dataset.languagePreferenceEntry === 'true',
+        base: root.dataset.basePath ?? '/',
+      });
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
